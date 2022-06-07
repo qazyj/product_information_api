@@ -1,5 +1,5 @@
 package api.productinformation.domain;
 
-public enum UserType {
+public enum Type {
     NORMAL, CORPORATE
 }

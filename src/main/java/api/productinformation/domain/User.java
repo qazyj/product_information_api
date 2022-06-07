@@ -15,7 +15,7 @@ public class User {
     private String username;
 
     @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private Type userType;
 
     @Enumerated(EnumType.STRING)
     private UserState userState;
