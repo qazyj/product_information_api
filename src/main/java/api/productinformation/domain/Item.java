@@ -3,6 +3,8 @@ package api.productinformation.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,9 +14,8 @@ public class Item extends DateEntity{
     @Column(name = "item_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "promotion_id")
-    private Promotion promotion;
+    @OneToMany(mappedBy = "item")
+    private List<ItemPromotion> itemPromotions = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_item_id")
@@ -29,13 +30,5 @@ public class Item extends DateEntity{
 
     public void setUserItem(UserItem userItem){
         this.userItem = userItem;
-    }
-
-    public Item(Promotion promotion, String itemName, Type itemType, Long itemPrice) {
-        this.promotion = promotion;
-        this.itemName = itemName;
-        this.itemType = itemType;
-        this.itemPrice = itemPrice;
-        this.userItem.addItems(this);
     }
 }

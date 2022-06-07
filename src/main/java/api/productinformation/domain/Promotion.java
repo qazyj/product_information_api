@@ -14,7 +14,7 @@ public class Promotion extends DateEntity{
     private Long id;
 
     @OneToMany(mappedBy = "promotion")
-    private List<Item> items = new ArrayList<>();
+    private List<ItemPromotion> itemPromotions = new ArrayList<>();
 
     private String promotionName;
 
