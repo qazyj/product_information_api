@@ -27,5 +27,15 @@ public class Item extends DateEntity{
 
     private Long itemPrice;
 
+    public void setUserItem(UserItem userItem){
+        this.userItem = userItem;
+    }
 
+    public Item(Promotion promotion, String itemName, Type itemType, Long itemPrice) {
+        this.promotion = promotion;
+        this.itemName = itemName;
+        this.itemType = itemType;
+        this.itemPrice = itemPrice;
+        this.userItem.addItems(this);
+    }
 }

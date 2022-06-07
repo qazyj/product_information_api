@@ -23,4 +23,15 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserState userState;
+
+    public void setUserItem(UserItem userItem){
+        this.userItem = userItem;
+    }
+
+    public User(String username, Type userType, UserState userState){
+        this.username = username;
+        this.userType = userType;
+        this.userState = userState;
+        this.userItem.addUsers(this);
+    }
 }

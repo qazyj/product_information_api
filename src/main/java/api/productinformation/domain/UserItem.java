@@ -20,4 +20,15 @@ public class UserItem {
 
     @OneToMany(mappedBy = "userItem")
     private List<Item> items = new ArrayList<>();
+
+    //==연관관계 메서드==//
+    public void addUsers(User user){
+        this.users.add(user);
+        user.setUserItem(this);
+    }
+
+    public void addItems(Item item){
+        this.items.add(item);
+        item.setUserItem(this);
+    }
 }
