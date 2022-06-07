@@ -5,6 +5,11 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * User Entity
+ * Item Entity
+ * N:M 매핑 => 1:N & N:1 매핑
+ */
 @Entity
 @Getter
 public class UserItem {
