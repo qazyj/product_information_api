@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class Item extends DateEntity{g
+public class Item extends DateEntity{
     @Id
     @GeneratedValue
     @Column(name = "item_id")
@@ -16,11 +16,16 @@ public class Item extends DateEntity{g
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_item_id")
+    private UserItem userItem;
+
     private String itemName;
 
     @Enumerated(EnumType.STRING)
     private Type itemType;
 
     private Long itemPrice;
+
 
 }

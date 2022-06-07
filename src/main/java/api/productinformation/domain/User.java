@@ -12,6 +12,10 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_item_id")
+    private UserItem userItem;
+
     private String username;
 
     @Enumerated(EnumType.STRING)
