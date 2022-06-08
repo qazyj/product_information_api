@@ -1,5 +1,8 @@
-package api.productinformation.entity;
+package api.productinformation.entity.user;
 
+import api.productinformation.entity.Type;
+import api.productinformation.entity.UserItem;
+import api.productinformation.entity.UserState;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,9 @@
-package api.productinformation.entity;
+package api.productinformation.entity.item;
 
+import api.productinformation.entity.DateEntity;
+import api.productinformation.entity.ItemPromotion;
+import api.productinformation.entity.Type;
+import api.productinformation.entity.UserItem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item extends DateEntity{
+public class Item extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")

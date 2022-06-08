@@ -1,6 +1,6 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.User;
+import api.productinformation.entity.user.User;
 import api.productinformation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
