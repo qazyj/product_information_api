@@ -1,0 +1,28 @@
+package api.productinformation.entity.promotion;
+
+import api.productinformation.entity.ItemPromotion;
+import lombok.Data;
+
+import javax.persistence.OneToMany;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+public class PromotionDto {
+    private Long id;
+    private String promotionName;
+    private Integer discountAmount;
+    private Double discountRate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    public PromotionDto(Long id, String promotionName, Integer discountAmount, Double discountRate, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
+        this.promotionName = promotionName;
+        this.discountAmount = discountAmount;
+        this.discountRate = discountRate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+}
