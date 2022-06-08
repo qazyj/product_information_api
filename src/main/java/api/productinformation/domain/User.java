@@ -27,6 +27,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserState userState;
 
+    public void setUserItem(UserItem userItem){
+        this.userItem = userItem;
+    }
+
     //==생성 메서드==//
     public static User createUser(String username, String userType, UserItem userItem){
         User user = new User();
