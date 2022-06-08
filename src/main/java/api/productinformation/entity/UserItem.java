@@ -41,4 +41,10 @@ public class UserItem {
         this.items.add(item);
         item.setUserItem(this);
     }
+
+    //==생성 메서드==//
+    public static UserItem createUserItem(){
+        UserItem userItem = new UserItem();
+        return userItem;
+    }
 }
