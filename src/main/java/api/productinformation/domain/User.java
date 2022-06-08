@@ -40,7 +40,7 @@ public class User {
         else
             user.userType = Type.CORPORATE;
         user.userState = UserState.USE;
-        user.userItem = userItem;
+        userItem.addUsers(user);
         return user;
     }
 
