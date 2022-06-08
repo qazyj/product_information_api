@@ -11,15 +11,9 @@ import java.util.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SequenceGenerator(
-        name = "PROMOTION_SEQ_GENERATOR",
-        sequenceName = "PROMOTION_SEQ", // 매핑할 데이터베이스 시퀀스 이름
-        initialValue = 1,
-        allocationSize = 1)
 public class Promotion extends DateEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "PROMOTION_SEQ_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promotion_id")
     private Long id;
 
