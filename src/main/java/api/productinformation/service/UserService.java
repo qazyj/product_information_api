@@ -22,7 +22,7 @@ public class UserService {
     @Transactional
     public void saveUser(UserAdd userAdd){
         Optional<UserItem> findUserItem = getUserItem(userAdd);
-        User user = User.createUser(userAdd.getUsername(), userAdd.getUserType(), findUserItem.get());
+        User user = User.createUser(userAdd.getUsername(), userAdd.getUserType(), userAdd.getUserState(), findUserItem.get());
         userRepository.save(user);
     }
 
