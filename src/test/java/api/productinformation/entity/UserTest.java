@@ -30,7 +30,7 @@ class UserTest {
 
         //when
         UserItem findUserItem = em.find(UserItem.class, useritem.getUserItemId());
-        User user = User.createUser("aa", "일반", findUserItem);
+        User user = User.createUser("aa", "일반", "정상", findUserItem);
 
         //then
         assertThat(user.getUserType()).isEqualTo(Type.NORMAL);
@@ -48,7 +48,7 @@ class UserTest {
 
         //when
         UserItem findUserItem = em.find(UserItem.class, useritem.getUserItemId());
-        User user = User.createUser("aa", "일반", findUserItem);
+        User user = User.createUser("aa", "일반", "정상", findUserItem);
         em.persist(user);
         user.withdraw();
         em.flush();
@@ -73,7 +73,7 @@ class UserTest {
 
         //when
         UserItem findUserItem = em.find(UserItem.class, userItem.getUserItemId());
-        User user = User.createUser("aa", "일반", findUserItem);
+        User user = User.createUser("aa", "일반", "정상", findUserItem);
 
         //then
         assertThat(user.getUserItem().getUserItemId()).isEqualTo(findUserItem.getUserItemId());
@@ -91,7 +91,7 @@ class UserTest {
 
         //when
         UserItem findUserItem = em.find(UserItem.class, userItem.getUserItemId());
-        User user = User.createUser("aa", "일반", findUserItem);
+        User user = User.createUser("aa", "일반", "정상", findUserItem);
         Item item = Item.createItem("bb", "일반", 20000L, findUserItem,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
@@ -121,7 +121,7 @@ class UserTest {
         Item item4 = Item.createItem("bb", "일반", 20000L, userItem,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
-        User user = User.createUser("aa", "일반", userItem);
+        User user = User.createUser("aa", "일반", "정상", userItem);
         em.persist(userItem);
         em.persist(item1);
         em.persist(item2);
