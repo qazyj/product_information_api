@@ -16,41 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class UserTest {
     @Autowired EntityManager em;
-
-
-    @Test
-    public void 유저_PK값_테스트() {
-        UserItem useritem1 = new UserItem();
-        UserItem useritem2 = new UserItem();
-        UserItem useritem3 = new UserItem();
-        UserItem useritem4 = new UserItem();
-        em.persist(useritem1);
-        em.persist(useritem2);
-        em.persist(useritem3);
-        em.persist(useritem4);
-
-
-        UserItem findUserItem = em.find(UserItem.class, 1L);
-        User user1 = User.createUser("aa", "일반", findUserItem);
-        User user2 = User.createUser("aab", "일반", findUserItem);
-        User user3 = User.createUser("aab", "일반", findUserItem);
-        User user4 = User.createUser("aab", "일반", findUserItem);
-
-        UserItem useritem5 = new UserItem();
-        em.persist(useritem5);
-
-
-        em.persist(user1);
-        em.persist(user2);
-        em.persist(user3);
-        em.persist(user4);
-        User user5 = User.createUser("aab", "일반", findUserItem);
-        em.persist(user5);
-    }
-
+    
     @Test
     public void 유저_엔티티_등록() throws Exception {
         //given
@@ -60,7 +28,7 @@ class UserTest {
         em.clear();
 
         //when
-        UserItem findUserItem = em.find(UserItem.class, 1L);
+        UserItem findUserItem = em.find(UserItem.class, useritem.getUserItemId());
         User user = User.createUser("aa", "일반", findUserItem);
 
         //then
@@ -78,13 +46,13 @@ class UserTest {
         em.clear();
 
         //when
-        UserItem findUserItem = em.find(UserItem.class, 1L);
+        UserItem findUserItem = em.find(UserItem.class, useritem.getUserItemId());
         User user = User.createUser("aa", "일반", findUserItem);
         em.persist(user);
         user.withdraw();
         em.flush();
         em.clear();
-        User findUser = em.find(User.class, 2L);
+        User findUser = em.find(User.class, user.getId());
 
         //then
         assertThat(user.getUserState()).isEqualTo(UserState.UNUSE);
@@ -103,7 +71,7 @@ class UserTest {
         em.clear();
 
         //when
-        UserItem findUserItem = em.find(UserItem.class, 1L);
+        UserItem findUserItem = em.find(UserItem.class, userItem.getUserItemId());
         User user = User.createUser("aa", "일반", findUserItem);
 
         //then
@@ -121,7 +89,7 @@ class UserTest {
         em.clear();
 
         //when
-        UserItem findUserItem = em.find(UserItem.class, 1L);
+        UserItem findUserItem = em.find(UserItem.class, userItem.getUserItemId());
         User user = User.createUser("aa", "일반", findUserItem);
         Item item = Item.createItem("bb", "일반", 20000L, findUserItem,
                 LocalDate.of(2022,1,1),

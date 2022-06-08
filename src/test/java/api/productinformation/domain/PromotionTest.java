@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class PromotionTest {
     @Autowired
     EntityManager em;
@@ -31,7 +30,7 @@ class PromotionTest {
         em.clear();
 
         //when
-        Promotion findPromotion = em.find(Promotion.class, 1L);
+        Promotion findPromotion = em.find(Promotion.class, promotion.getId());
 
         //then
         assertThat(promotion.getId()).isEqualTo(findPromotion.getId());
@@ -59,16 +58,16 @@ class PromotionTest {
         em.flush();
         em.clear();
 
-        Item findItem = em.find(Item.class, 1L);
-        Promotion findPromotion = em.find(Promotion.class, 1L);
+        Item findItem = em.find(Item.class, item.getId());
+        Promotion findPromotion = em.find(Promotion.class, promotion.getId());
         ItemPromotion itemPromotion = ItemPromotion.createItemPromotion(findItem, findPromotion);
         em.persist(itemPromotion);
         em.flush();
         em.clear();
 
         //when
-        Promotion findPromotion2 = em.find(Promotion.class, 1L);
-        Item findItem2 = em.find(Item.class, 1L);
+        Promotion findPromotion2 = em.find(Promotion.class, promotion.getId());
+        Item findItem2 = em.find(Item.class, item.getId());
 
         //then
         // itemPromotion, promotion의 start,end date는 같아야 한다.
@@ -99,15 +98,15 @@ class PromotionTest {
         em.flush();
         em.clear();
 
-        Item findItem = em.find(Item.class, 1L);
-        Promotion findPromotion = em.find(Promotion.class, 1L);
+        Item findItem = em.find(Item.class, item.getId());
+        Promotion findPromotion = em.find(Promotion.class, promotion.getId());
         ItemPromotion itemPromotion = ItemPromotion.createItemPromotion(findItem, findPromotion);
         em.persist(itemPromotion);
         em.flush();
         em.clear();
 
         //when
-        Promotion findPromotion2 = em.find(Promotion.class, 1L);
+        Promotion findPromotion2 = em.find(Promotion.class, promotion.getId());
 
         //then
         assertThat(findPromotion2.getItemPromotions().get(0).getSalePrice()).isEqualTo(20000L-(long)(20000L*0.05));
@@ -130,15 +129,15 @@ class PromotionTest {
         em.flush();
         em.clear();
 
-        Item findItem = em.find(Item.class, 1L);
-        Promotion findPromotion = em.find(Promotion.class, 1L);
+        Item findItem = em.find(Item.class, item.getId());
+        Promotion findPromotion = em.find(Promotion.class, promotion.getId());
         ItemPromotion itemPromotion = ItemPromotion.createItemPromotion(findItem, findPromotion);
         em.persist(itemPromotion);
         em.flush();
         em.clear();
 
         //when
-        Promotion findPromotion2 = em.find(Promotion.class, 1L);
+        Promotion findPromotion2 = em.find(Promotion.class, promotion.getId());
 
         //then
         assertThat(findPromotion2.getItemPromotions().get(0).getSalePrice()).isEqualTo(20000L-2000);

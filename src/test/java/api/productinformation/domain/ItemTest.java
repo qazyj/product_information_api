@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class ItemTest {
     @Autowired
     EntityManager em;
@@ -33,7 +32,7 @@ class ItemTest {
         em.clear();
 
         //when
-        Item findItem = em.find(Item.class, 1L);
+        Item findItem = em.find(Item.class, item.getId());
 
         //then
         assertThat(findItem.getItemName()).isEqualTo("bb");
