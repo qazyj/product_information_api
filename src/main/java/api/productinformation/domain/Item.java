@@ -31,4 +31,17 @@ public class Item extends DateEntity{
     public void setUserItem(UserItem userItem){
         this.userItem = userItem;
     }
+
+    //==생성 메서드==//
+    public static Item createItem(String itemName, String itemType, Long itemPrice, UserItem userItem){
+        Item item = new Item();
+        item.itemName = itemName;
+        if(itemType.equals("일반"))
+            item.itemType = Type.NORMAL;
+        else
+            item.itemType = Type.CORPORATE;
+        item.itemPrice = itemPrice;
+        userItem.addItems(item);
+        return item;
+    }
 }
