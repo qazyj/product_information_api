@@ -10,12 +10,12 @@ import java.time.LocalDate;
 @Setter
 public class ItemAdd {
     private String itemName;
-    private Type itemType;
+    private String itemType;
     private Long itemPrice;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public ItemAdd(String itemName, Type itemType, Long itemPrice, LocalDate startDate, LocalDate endDate) {
+    public ItemAdd(String itemName, String itemType, Long itemPrice, LocalDate startDate, LocalDate endDate) {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemPrice = itemPrice;

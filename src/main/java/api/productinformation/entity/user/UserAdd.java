@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 public class UserAdd {
     private String username;
-    private Type userType;
-    private UserState userState;
+    private String userType;
+    private String userState;
 
-    public UserAdd(String username, Type userType, UserState userState) {
+    public UserAdd(String username, String userType, String userState) {
         this.username = username;
         this.userType = userType;
         this.userState = userState;
