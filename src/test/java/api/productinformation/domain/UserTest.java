@@ -103,4 +103,38 @@ class UserTest {
         assertThat(items.size()).isEqualTo(1);
         assertThat(users.size()).isEqualTo(1);
     }
+
+    @Test
+    public void 유저_유저아이템_아이템_엔티티_연관관계_아이템이_여러개일때() throws Exception {
+        //given
+        UserItem userItem = new UserItem();
+        Item item1 = Item.createItem("bb", "일반", 20000L, userItem,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2023,1,1));
+        Item item2 = Item.createItem("bb", "일반", 20000L, userItem,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2023,1,1));
+        Item item3 = Item.createItem("bb", "일반", 20000L, userItem,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2023,1,1));
+        Item item4 = Item.createItem("bb", "일반", 20000L, userItem,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2023,1,1));
+        User user = User.createUser("aa", "일반", userItem);
+        em.persist(userItem);
+        em.persist(item1);
+        em.persist(item2);
+        em.persist(item3);
+        em.persist(item4);
+        em.persist(user);
+        em.flush();
+        em.clear();
+
+
+        //when
+        User findUser = em.find(User.class, user.getId());
+
+        //then
+        assertThat(findUser.getUserItem().getItems().size()).isEqualTo(4);
+    }
 }

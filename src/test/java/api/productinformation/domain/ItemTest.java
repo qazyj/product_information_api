@@ -40,6 +40,5 @@ class ItemTest {
         assertThat(findItem.getItemPrice()).isEqualTo(20000L);
         assertThat(findItem.getStartDate()).isEqualTo(LocalDate.of(2022,1,1));
         assertThat(findItem.getEndDate()).isEqualTo(LocalDate.of(2023,1,1));
-
     }
 }
