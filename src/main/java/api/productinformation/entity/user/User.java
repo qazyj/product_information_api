@@ -35,14 +35,19 @@ public class User {
     }
 
     //==생성 메서드==//
-    public static User createUser(String username, String userType, UserItem userItem){
+    public static User createUser(String username, String userType, String userState, UserItem userItem){
         User user = new User();
         user.username = username;
         if(userType.equals("일반"))
             user.userType = Type.NORMAL;
         else
             user.userType = Type.CORPORATE;
-        user.userState = UserState.USE;
+
+        if(userState.equals("정상"))
+            user.userState = UserState.USE;
+        else
+            user.userState = UserState.UNUSE;
+
         userItem.addUsers(user);
         return user;
     }
