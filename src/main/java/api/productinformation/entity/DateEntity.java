@@ -1,4 +1,4 @@
-package api.productinformation.domain;
+package api.productinformation.entity;
 
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
