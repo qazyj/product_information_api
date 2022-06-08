@@ -31,7 +31,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void deleteUser(ItemSearch itemSearch){
+    public void deleteItem(ItemSearch itemSearch){
         Optional<Item> item = itemRepository.findById(itemSearch.getId());
         itemRepository.delete(item.get());
     }
