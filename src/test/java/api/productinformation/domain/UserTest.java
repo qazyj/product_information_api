@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
     @Autowired EntityManager em;
 
+
     @Test
     public void 유저_PK값_테스트() {
         UserItem useritem1 = new UserItem();
