@@ -12,9 +12,15 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SequenceGenerator(
+        name = "ITEM_SEQ_GENERATOR",
+        sequenceName = "ITEM_SEQ", // 매핑할 데이터베이스 시퀀스 이름
+        initialValue = 1,
+        allocationSize = 1)
 public class Item extends DateEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "ITEM_SEQ_GENERATOR")
     @Column(name = "item_id")
     private Long id;
 

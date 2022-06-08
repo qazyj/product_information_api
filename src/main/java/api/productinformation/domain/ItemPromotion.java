@@ -14,9 +14,15 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SequenceGenerator(
+        name = "ITEM_PROMOTION_SEQ_GENERATOR",
+        sequenceName = "ITEM_PROMOTION_SEQ", // 매핑할 데이터베이스 시퀀스 이름
+        initialValue = 1,
+        allocationSize = 1)
 public class ItemPromotion extends DateEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "ITEM_PROMOTION_SEQ_GENERATOR")
     @Column(name = "item_promotion_id")
     private Long id;
 

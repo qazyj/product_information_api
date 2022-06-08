@@ -12,11 +12,17 @@ import java.util.*;
  */
 @Entity
 @Getter
+@SequenceGenerator(
+        name = "USER_ITEM_SEQ_GENERATOR",
+        sequenceName = "USER_ITEM_SEQ", // 매핑할 데이터베이스 시퀀스 이름
+        initialValue = 1,
+        allocationSize = 1)
 public class UserItem {
-    // 0 : 일반 회원
-    // 1 : 기업 회원
+    // 1 : 일반 회원
+    // 2 : 기업 회원
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "USER_ITEM_SEQ_GENERATOR")
     @Column(name = "user_item_id")
     private Long userItemId;
 
