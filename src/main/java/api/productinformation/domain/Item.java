@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,8 @@ public class Item extends DateEntity{
     }
 
     //==생성 메서드==//
-    public static Item createItem(String itemName, String itemType, Long itemPrice, UserItem userItem){
+    public static Item createItem(String itemName, String itemType, Long itemPrice, UserItem userItem,
+                                  LocalDate startDate, LocalDate endDate){
         Item item = new Item();
         item.itemName = itemName;
         if(itemType.equals("일반"))
@@ -45,6 +47,8 @@ public class Item extends DateEntity{
             item.itemType = Type.CORPORATE;
         item.itemPrice = itemPrice;
         userItem.addItems(item);
+        item.setStartDate(startDate);
+        item.setEndDate(endDate);
         return item;
     }
 }
