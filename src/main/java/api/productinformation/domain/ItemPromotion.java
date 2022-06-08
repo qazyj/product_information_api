@@ -29,18 +29,20 @@ public class ItemPromotion extends DateEntity {
 
     private Long salePrice;
 
-    //==생성자로 값 주입==//
-    public ItemPromotion(Item item, Promotion promotion){
+    //==생성 메서드==//
+    public static ItemPromotion createItemPromotion(Item item, Promotion promotion){
+        ItemPromotion itemPromotion = new ItemPromotion();
         // Item 연관 관계 매핑
-        this.item = item;
-        item.getItemPromotions().add(this);
+        itemPromotion.item = item;
+        item.getItemPromotions().add(itemPromotion);
         // Promotion 연관 관계 매핑
-        this.promotion = promotion;
-        promotion.getItemPromotions().add(this);
+        itemPromotion.promotion = promotion;
+        promotion.getItemPromotions().add(itemPromotion);
 
-        this.salePrice = setSalePrice(item, promotion);
-        setStartDate(promotion.getStartDate());
-        setEndDate(promotion.getEndDate());
+        itemPromotion.salePrice = itemPromotion.setSalePrice(item, promotion);
+        itemPromotion.setStartDate(promotion.getStartDate());
+        itemPromotion.setEndDate(promotion.getEndDate());
+        return itemPromotion;
     }
 
     public Long setSalePrice(Item item, Promotion promotion) {
