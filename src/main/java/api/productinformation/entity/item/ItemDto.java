@@ -14,12 +14,12 @@ import java.util.List;
 public class ItemDto {
     private Long id;
     private String itemName;
-    private Type itemType;
+    private String itemType;
     private Long itemPrice;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public ItemDto(Long id, String itemName, Type itemType, Long itemPrice, LocalDate startDate, LocalDate endDate) {
+    public ItemDto(Long id, String itemName, String itemType, Long itemPrice, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.itemName = itemName;
         this.itemType = itemType;
@@ -31,7 +31,7 @@ public class ItemDto {
     public ItemDto(Item item){
         this.id = item.getId();
         this.itemName = item.getItemName();
-        this.itemType = item.getItemType();
+        this.itemType = item.getItemType().toString();
         this.itemPrice = item.getItemPrice();
         this.startDate = item.getStartDate();
         this.endDate = item.getEndDate();

@@ -11,10 +11,10 @@ import javax.persistence.Enumerated;
 public class UserDto {
     private Long userId;
     private String username;
-    private Type userType;
-    private UserState userState;
+    private String userType;
+    private String userState;
 
-    public UserDto(Long userId, String username, Type userType, UserState userState) {
+    public UserDto(Long userId, String username, String userType, String userState) {
         this.userId = userId;
         this.username = username;
         this.userType = userType;
@@ -24,7 +24,7 @@ public class UserDto {
     public UserDto(User user){
         this.userId = user.getId();
         this.username = user.getUsername();
-        this.userType = user.getUserType();
-        this.userState = user.getUserState();
+        this.userType = user.getUserType().toString();
+        this.userState = user.getUserState().toString();
     }
 }
