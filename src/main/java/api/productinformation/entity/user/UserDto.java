@@ -20,4 +20,11 @@ public class UserDto {
         this.userType = userType;
         this.userState = userState;
     }
+
+    public UserDto(User user){
+        this.userId = user.getId();
+        this.username = user.getUsername();
+        this.userType = user.getUserType();
+        this.userState = user.getUserState();
+    }
 }

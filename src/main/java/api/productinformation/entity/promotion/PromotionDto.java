@@ -25,4 +25,13 @@ public class PromotionDto {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public PromotionDto(Promotion promotion){
+        this.id = promotion.getId();
+        this.promotionName = promotion.getPromotionName();
+        this.discountAmount = promotion.getDiscountAmount();
+        this.discountRate = promotion.getDiscountRate();
+        this.startDate = promotion.getStartDate();
+        this.endDate = promotion.getEndDate();
+    }
 }

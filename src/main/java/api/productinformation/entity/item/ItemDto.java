@@ -27,4 +27,13 @@ public class ItemDto {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public ItemDto(Item item){
+        this.id = item.getId();
+        this.itemName = item.getItemName();
+        this.itemType = item.getItemType();
+        this.itemPrice = item.getItemPrice();
+        this.startDate = item.getStartDate();
+        this.endDate = item.getEndDate();
+    }
 }

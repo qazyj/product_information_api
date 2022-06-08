@@ -1,6 +1,7 @@
 package api.productinformation.entity.item;
 
 import api.productinformation.entity.Type;
+import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.promotion.PromotionDto;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class ItemPromotionDto {
     private PromotionDto promotionDto;
 
     public ItemPromotionDto(Long itemId, String itemName, Type itemType, Long itemPrice, Long salePrice,
-                            LocalDate itemStartDate, LocalDate itemEndDate, PromotionDto promotionDto) {
+                            LocalDate itemStartDate, LocalDate itemEndDate, Promotion promotion) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemType = itemType;
@@ -26,6 +27,16 @@ public class ItemPromotionDto {
         this.salePrice = salePrice;
         this.itemStartDate = itemStartDate;
         this.itemEndDate = itemEndDate;
-        this.promotionDto = promotionDto;
+        this.promotionDto = new PromotionDto(promotion);
+    }
+
+    public ItemPromotionDto(Item item, Promotion promotion){
+        this.itemId = item.getId();
+        this.itemName = item.getItemName();
+        this.itemType = item.getItemType();
+        this.itemPrice = item.getItemPrice();
+        this.itemStartDate = item.getStartDate();
+        this.itemEndDate = item.getEndDate();
+        this.promotionDto = new PromotionDto(promotion);
     }
 }
