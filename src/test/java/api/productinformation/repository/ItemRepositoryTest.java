@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    EntityManager em;
 
     @Test
     public void 유저가_살_수_있는_아이템_목록_수_일반_회원() throws Exception {
@@ -50,12 +53,15 @@ class ItemRepositoryTest {
         // initDB에서 추가한 기본 데이터
         for(int i = 0; i < 100; i++){
             Item item = Item.createItem("item"+i, "일반", 1000L, "2021.1.1", "2022.12.24");
+            itemRepository.save(item);
         }
+        em.flush();
+        em.clear();
 
         //when
         List<ItemDto> results = itemRepository.findCanBuyItemList();
 
         //then
-        assertThat(results.size()).isEqualTo(3);
+        assertThat(results.size()).isEqualTo(103);
     }
 }
