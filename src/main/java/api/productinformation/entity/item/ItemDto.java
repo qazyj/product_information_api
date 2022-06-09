@@ -31,7 +31,10 @@ public class ItemDto {
     public ItemDto(Item item){
         this.id = item.getId();
         this.itemName = item.getItemName();
-        this.itemType = item.getItemType().toString();
+        if(item.getItemType().equals(Type.NORMAL))
+            this.itemType = "일반";
+        else
+            this.itemType = "기업회원상품";
         this.itemPrice = item.getItemPrice();
         this.startDate = item.getStartDate();
         this.endDate = item.getEndDate();
