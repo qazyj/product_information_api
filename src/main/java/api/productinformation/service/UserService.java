@@ -1,6 +1,7 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.UserItem;
+import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +35,11 @@ public class UserService {
     public void deleteUser(UserSearch userSearch){
         Optional<User> user = userRepository.findById(userSearch.getId());
         userRepository.delete(user.get());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemDto> canBuyItemList() {
+        return null;
     }
 
     private Optional<UserItem> getUserItem(UserAdd userAdd) {
