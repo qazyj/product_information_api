@@ -34,8 +34,8 @@ class PromotionServiceTest {
     public void 프로모션_discountAmount_null_등록() throws Exception {
         //given
         PromotionAdd promotionAdd = new PromotionAdd("promotion", null, 0.05,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022.01.01",
+                "2023.01.01");
         PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
 
         //when
@@ -53,8 +53,8 @@ class PromotionServiceTest {
     public void 프로모션_discountRate_null_등록() throws Exception {
         //given
         PromotionAdd promotionAdd = new PromotionAdd("promotion", 1000, null,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022.01.01",
+                "2023.01.01");
         PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
 
         //when
@@ -73,8 +73,8 @@ class PromotionServiceTest {
         //given
         //given
         PromotionAdd promotionAdd = new PromotionAdd("promotion", null, 0.05,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022.01.01",
+                "2023.01.01");
         PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
 
         promotionRepository.findById(promotionDto.getId()).get();
