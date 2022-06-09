@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -14,11 +15,11 @@ public class PromotionAdd {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public PromotionAdd(String promotionName, Integer discountAmount, Double discountRate, LocalDate startDate, LocalDate endDate) {
+    public PromotionAdd(String promotionName, Integer discountAmount, Double discountRate, String startDate, String endDate) {
         this.promotionName = promotionName;
         this.discountAmount = discountAmount;
         this.discountRate = discountRate;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

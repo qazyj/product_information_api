@@ -35,8 +35,8 @@ class ItemServiceTest {
     public void 아이템_등록() throws Exception {
         //given
         ItemAdd itemAdd = new ItemAdd("bb", "일반", 20000L,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022.01.01",
+                "2023.01.01");
         ItemDto itemDto = itemService.saveItem(itemAdd);
 
         //when
@@ -58,8 +58,8 @@ class ItemServiceTest {
     public void 아이템_등록_후_삭제() throws Exception {
         //given
         ItemAdd itemAdd = new ItemAdd("bb", "일반", 20000L,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022.1.1",
+                "2023.1.1");
         ItemDto itemDto = itemService.saveItem(itemAdd);
         itemRepository.findById(itemDto.getId()).get();
         ItemSearch itemSearch = new ItemSearch();
