@@ -1,9 +1,5 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.UserItem;
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.item.ItemAdd;
-import api.productinformation.entity.item.ItemSearch;
 import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.promotion.PromotionAdd;
 import api.productinformation.entity.promotion.PromotionDto;

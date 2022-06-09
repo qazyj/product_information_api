@@ -44,15 +44,13 @@ class PromotionTest {
     @Test
     public void 프로모션_아이템_연관관계() throws Exception {
         //given
-        UserItem userItem = new UserItem();
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
                         LocalDate.of(2022,1,1),
                         LocalDate.of(2023,1,1));
-        Item item = Item.createItem("bb", "일반", 20000L, userItem,
+        Item item = Item.createItem("bb", "일반", 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
-        em.persist(userItem);
         em.persist(promotion);
         em.persist(item);
         em.flush();
@@ -84,15 +82,13 @@ class PromotionTest {
     @Test
     public void discountRate() throws Exception {
         //given
-        UserItem userItem = new UserItem();
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
                         LocalDate.of(2022,1,1),
                         LocalDate.of(2023,1,1));
-        Item item = Item.createItem("bb", "일반", 20000L, userItem,
+        Item item = Item.createItem("bb", "일반", 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
-        em.persist(userItem);
         em.persist(promotion);
         em.persist(item);
         em.flush();
@@ -115,15 +111,13 @@ class PromotionTest {
     @Test
     public void discountAmount() throws Exception {
         //given
-        UserItem userItem = new UserItem();
         Promotion promotion =
                 Promotion.createPromotion("promotion", 2000, null,
                         LocalDate.of(2022,1,1),
                         LocalDate.of(2023,1,1));
-        Item item = Item.createItem("bb", "일반", 20000L, userItem,
+        Item item = Item.createItem("bb", "일반", 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
-        em.persist(userItem);
         em.persist(promotion);
         em.persist(item);
         em.flush();

@@ -1,7 +1,6 @@
 package api.productinformation.entity.user;
 
 import api.productinformation.entity.Type;
-import api.productinformation.entity.UserItem;
 import api.productinformation.entity.UserState;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,10 +17,6 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_item_id")
-    private UserItem userItem;
-
     private String username;
 
     @Enumerated(EnumType.STRING)
@@ -30,12 +25,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserState userState;
 
-    public void setUserItem(UserItem userItem){
-        this.userItem = userItem;
-    }
 
     //==생성 메서드==//
-    public static User createUser(String username, String userType, String userState, UserItem userItem){
+    public static User createUser(String username, String userType, String userState){
         User user = new User();
         user.username = username;
         if(userType.equals("일반"))
@@ -47,8 +39,6 @@ public class User {
             user.userState = UserState.USE;
         else
             user.userState = UserState.UNUSE;
-
-        userItem.addUsers(user);
         return user;
     }
 
