@@ -31,6 +31,6 @@ public class UserController {
 
     @GetMapping("/itemlist")
     public List<ItemDto> canBuyItemList(UserSearch userSearch){
-        return userService.canBuyItemList();
+        return userService.canBuyItemList(userSearch);
     }
 }
