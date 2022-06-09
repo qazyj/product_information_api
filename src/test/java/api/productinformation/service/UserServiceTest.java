@@ -4,6 +4,7 @@ import api.productinformation.entity.UserItem;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
+import api.productinformation.entity.user.UserSearch;
 import api.productinformation.repository.UserRepository;
 import api.productinformation.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,6 @@ class UserServiceTest {
         UserDto userDto = userService.saveUser(userAdd);
 
         //when
-        System.out.println("userDto.id = " + userDto.getUserId());
         User findUser = userRepository.findById(userDto.getUserId()).get();
 
         //then
@@ -44,5 +44,23 @@ class UserServiceTest {
         assertThat(userAdd.getUsername()).isEqualTo(findUser.getUsername());
         assertThat(userDto.getUserState()).isEqualTo(findUser.getUserState().toString());
         assertThat(userDto.getUserType()).isEqualTo(findUser.getUserType().toString());
+    }
+
+    @Test
+    public void 유저_등록_후_삭제() throws Exception {
+        //given
+        // InitDB 클래스에서 저장한 userItem
+        UserItem userItem = em.find(UserItem.class, 1L);
+        UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
+        UserDto userDto = userService.saveUser(userAdd);
+        UserSearch userSearch = new UserSearch();
+        userSearch.setId(userDto.getUserId());
+        userService.deleteUser(userSearch);
+
+        //when
+        Optional<User> findUser = userRepository.findById(userDto.getUserId());
+
+        //then
+        assertThat(findUser).isEqualTo(Optional.empty());
     }
 }
