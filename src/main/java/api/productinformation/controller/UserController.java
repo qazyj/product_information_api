@@ -1,5 +1,6 @@
 package api.productinformation.controller;
 
+import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
@@ -26,5 +27,10 @@ public class UserController {
     public String deleteUser(UserSearch userSearch){
         userService.deleteUser(userSearch);
         return "ok";
+    }
+
+    @GetMapping("/itemlist")
+    public List<ItemDto> canBuyItemList(UserSearch userSearch){
+        return userService.canBuyItemList();
     }
 }
