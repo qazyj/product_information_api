@@ -39,7 +39,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<ItemDto> canBuyItemList() {
-        
+        return null;
     }
 
     private Optional<UserItem> getUserItem(UserAdd userAdd) {
