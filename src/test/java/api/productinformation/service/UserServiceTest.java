@@ -1,6 +1,8 @@
 package api.productinformation.service;
 
+import api.productinformation.entity.Type;
 import api.productinformation.entity.UserItem;
+import api.productinformation.entity.UserState;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
@@ -31,8 +33,6 @@ class UserServiceTest {
     @Test
     public void 유저_등록() throws Exception {
         //given
-        // InitDB 클래스에서 저장한 userItem
-        UserItem userItem = em.find(UserItem.class, 1L);
         UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
         UserDto userDto = userService.saveUser(userAdd);
 
@@ -42,8 +42,14 @@ class UserServiceTest {
         //then
         assertThat(userDto.getUserId()).isEqualTo(findUser.getId());
         assertThat(userAdd.getUsername()).isEqualTo(findUser.getUsername());
-        assertThat(userDto.getUserState()).isEqualTo(findUser.getUserState().toString());
-        assertThat(userDto.getUserType()).isEqualTo(findUser.getUserType().toString());
+        if(findUser.getUserType().equals(Type.NORMAL))
+            assertThat(userDto.getUserType()).isEqualTo("일반");
+        else
+            assertThat(userDto.getUserType()).isEqualTo("기업회원");
+        if(findUser.getUserState().equals(UserState.USE))
+            assertThat(userDto.getUserState()).isEqualTo("정상");
+        else
+            assertThat(userDto.getUserState()).isEqualTo("탈퇴");
     }
 
     @Test
