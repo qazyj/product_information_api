@@ -24,7 +24,13 @@ public class UserDto {
     public UserDto(User user){
         this.userId = user.getId();
         this.username = user.getUsername();
-        this.userType = user.getUserType().toString();
-        this.userState = user.getUserState().toString();
+        if(user.getUserType().equals(Type.NORMAL))
+            this.userType = "일반";
+        else
+            this.userType = "기업회원";
+        if(user.getUserState().equals(UserState.USE))
+            this.userState = "정상";
+        else
+            this.userState = "탈퇴";
     }
 }
