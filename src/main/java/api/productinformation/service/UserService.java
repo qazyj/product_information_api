@@ -3,6 +3,7 @@ package api.productinformation.service;
 import api.productinformation.entity.UserItem;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
+import api.productinformation.entity.user.UserDto;
 import api.productinformation.entity.user.UserSearch;
 import api.productinformation.repository.UserItemRepository;
 import api.productinformation.repository.UserRepository;
@@ -20,10 +21,12 @@ public class UserService {
     private final UserItemRepository userItemRepository;
 
     @Transactional
-    public void saveUser(UserAdd userAdd){
+    public UserDto saveUser(UserAdd userAdd){
         Optional<UserItem> findUserItem = getUserItem(userAdd);
-        User user = User.createUser(userAdd.getUsername(), userAdd.getUserType(), userAdd.getUserState(), findUserItem.get());
-        userRepository.save(user);
+        User savedUser = userRepository.save(User.createUser(userAdd.getUsername(),
+                userAdd.getUserType(), userAdd.getUserState(), findUserItem.get()));
+
+        return new UserDto(savedUser);
     }
 
     @Transactional

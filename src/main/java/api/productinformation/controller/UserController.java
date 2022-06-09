@@ -1,13 +1,15 @@
 package api.productinformation.controller;
 
+import api.productinformation.entity.item.ItemDto;
+import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
+import api.productinformation.entity.user.UserDto;
 import api.productinformation.entity.user.UserSearch;
 import api.productinformation.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,9 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("")
-    public String saveUser(UserAdd userAdd){
-        userService.saveUser(userAdd);
-        return "ok";
+    public UserDto saveUser(UserAdd userAdd){
+        return userService.saveUser(userAdd);
     }
 
     @DeleteMapping("")
