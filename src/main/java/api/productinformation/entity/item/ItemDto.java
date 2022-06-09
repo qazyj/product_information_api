@@ -1,14 +1,9 @@
 package api.productinformation.entity.item;
 
-import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
-import api.productinformation.entity.UserItem;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class ItemDto {

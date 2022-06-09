@@ -1,15 +1,12 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.Type;
-import api.productinformation.entity.UserItem;
 import api.productinformation.entity.UserState;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
 import api.productinformation.entity.user.UserSearch;
 import api.productinformation.repository.UserRepository;
-import api.productinformation.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +17,6 @@ import javax.persistence.EntityManager;
 
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -56,7 +52,6 @@ class UserServiceTest {
     public void 유저_등록_후_삭제() throws Exception {
         //given
         // InitDB 클래스에서 저장한 userItem
-        UserItem userItem = em.find(UserItem.class, 1L);
         UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
         UserDto userDto = userService.saveUser(userAdd);
         UserSearch userSearch = new UserSearch();
