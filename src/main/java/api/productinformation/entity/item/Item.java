@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,20 @@ public class Item extends DateEntity {
     private Long itemPrice;
 
     //==생성 메서드==//
+    public static Item createItem(String itemName, String itemType, Long itemPrice,
+                                  String startDate, String endDate){
+        Item item = new Item();
+        item.itemName = itemName;
+        if(itemType.equals("일반"))
+            item.itemType = Type.NORMAL;
+        else
+            item.itemType = Type.CORPORATE;
+        item.itemPrice = itemPrice;
+        item.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        item.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        return item;
+    }
+
     public static Item createItem(String itemName, String itemType, Long itemPrice,
                                   LocalDate startDate, LocalDate endDate){
         Item item = new Item();
