@@ -29,8 +29,8 @@ public class UserController {
         return "ok";
     }
 
-    @GetMapping("/itemlist")
-    public List<ItemDto> canBuyItemList(UserSearch userSearch){
-        return userService.canBuyItemList(userSearch);
+    @GetMapping("/itemlist/{user_id}")
+    public List<ItemDto> canBuyItemList(@PathVariable("user_id") Long id){
+        return userService.canBuyItemList(id);
     }
 }

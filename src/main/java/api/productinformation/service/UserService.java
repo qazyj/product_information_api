@@ -38,8 +38,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<ItemDto> canBuyItemList(UserSearch userSearch) {
-        Optional<User> user = userRepository.findById(userSearch.getId());
+    public List<ItemDto> canBuyItemList(Long id) {
+        Optional<User> user = userRepository.findById(id);
         // user null일 경우 예외 처리 해야함
         // 유저가 탈퇴한 경우 예외 처리
         //if(user.get().getUserState().equals(UserState.UNUSE))
