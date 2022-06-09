@@ -20,11 +20,9 @@ class ItemTest {
     @Test
     public void 아이템_엔티티_등록() throws Exception {
         //given
-        UserItem userItem = new UserItem();
-        Item item = Item.createItem("bb", "일반", 20000L, userItem,
+        Item item = Item.createItem("bb", "일반", 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
-        em.persist(userItem);
         em.persist(item);
         em.flush();
         em.clear();

@@ -3,7 +3,6 @@ package api.productinformation.entity.item;
 import api.productinformation.entity.DateEntity;
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
-import api.productinformation.entity.UserItem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +24,6 @@ public class Item extends DateEntity {
     @OneToMany(mappedBy = "item")
     private List<ItemPromotion> itemPromotions = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_item_id")
-    private UserItem userItem;
-
     private String itemName;
 
     @Enumerated(EnumType.STRING)
@@ -36,12 +31,8 @@ public class Item extends DateEntity {
 
     private Long itemPrice;
 
-    public void setUserItem(UserItem userItem){
-        this.userItem = userItem;
-    }
-
     //==생성 메서드==//
-    public static Item createItem(String itemName, String itemType, Long itemPrice, UserItem userItem,
+    public static Item createItem(String itemName, String itemType, Long itemPrice,
                                   LocalDate startDate, LocalDate endDate){
         Item item = new Item();
         item.itemName = itemName;
@@ -50,7 +41,6 @@ public class Item extends DateEntity {
         else
             item.itemType = Type.CORPORATE;
         item.itemPrice = itemPrice;
-        userItem.addItems(item);
         item.setStartDate(startDate);
         item.setEndDate(endDate);
         return item;
