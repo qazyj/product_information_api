@@ -6,6 +6,7 @@ import api.productinformation.entity.item.ItemAdd;
 import api.productinformation.entity.item.ItemSearch;
 import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.promotion.PromotionAdd;
+import api.productinformation.entity.promotion.PromotionDto;
 import api.productinformation.entity.promotion.PromotionSearch;
 import api.productinformation.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +22,14 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
 
     @Transactional
-    public void savePromotion(PromotionAdd promotionAdd){
-        Promotion promotion = Promotion.createPromotion(
+    public PromotionDto savePromotion(PromotionAdd promotionAdd){
+        Promotion savedPromotion = promotionRepository.save(Promotion.createPromotion(
                 promotionAdd.getPromotionName(),
                 promotionAdd.getDiscountAmount(),
                 promotionAdd.getDiscountRate(),
                 promotionAdd.getStartDate(),
-                promotionAdd.getEndDate());
-        promotionRepository.save(promotion);
+                promotionAdd.getEndDate()));
+        return new PromotionDto(savedPromotion);
     }
 
     @Transactional

@@ -3,6 +3,7 @@ package api.productinformation.service;
 import api.productinformation.entity.UserItem;
 import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemAdd;
+import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.item.ItemSearch;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
@@ -23,11 +24,12 @@ public class ItemService {
     private final UserItemRepository userItemRepository;
 
     @Transactional
-    public void saveItem(ItemAdd itemAdd){
+    public ItemDto saveItem(ItemAdd itemAdd){
         Optional<UserItem> findUserItem = getUserItem(itemAdd);
-        Item item = Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
-                findUserItem.get(), itemAdd.getStartDate(), itemAdd.getEndDate());
-        itemRepository.save(item);
+
+        Item savedItem = itemRepository.save(Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
+                findUserItem.get(), itemAdd.getStartDate(), itemAdd.getEndDate()));
+        return new ItemDto(savedItem);
     }
 
     @Transactional
