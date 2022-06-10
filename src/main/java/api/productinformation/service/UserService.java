@@ -1,23 +1,16 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
-import api.productinformation.entity.UserState;
-import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.item.ItemPromotionDto;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
-import api.productinformation.entity.user.UserSearch;
 import api.productinformation.repository.ItemRepository;
 import api.productinformation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +30,8 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(UserSearch userSearch){
-        Optional<User> user = userRepository.findById(userSearch.getId());
+    public void deleteUser(Long id){
+        Optional<User> user = userRepository.findById(id);
         userRepository.delete(user.get());
     }
 

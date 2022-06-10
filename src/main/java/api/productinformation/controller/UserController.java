@@ -1,11 +1,8 @@
 package api.productinformation.controller;
 
-import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
-import api.productinformation.entity.user.UserSearch;
 import api.productinformation.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +20,9 @@ public class UserController {
         return userService.saveUser(userAdd);
     }
 
-    @DeleteMapping("")
-    public String deleteUser(UserSearch userSearch){
-        userService.deleteUser(userSearch);
+    @DeleteMapping("/{user_id}")
+    public String deleteUser(@PathVariable("user_id") Long id){
+        userService.deleteUser(id);
         return "ok";
     }
 

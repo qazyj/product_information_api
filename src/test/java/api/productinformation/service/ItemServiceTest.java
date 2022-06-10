@@ -59,9 +59,7 @@ class ItemServiceTest {
                 "2023.1.1");
         ItemDto itemDto = itemService.saveItem(itemAdd);
         itemRepository.findById(itemDto.getId()).get();
-        ItemSearch itemSearch = new ItemSearch();
-        itemSearch.setId(itemDto.getId());
-        itemService.deleteItem(itemSearch);
+        itemService.deleteItem(itemDto.getId());
 
         //when
         Optional<Item> findItem = itemRepository.findById(itemDto.getId());

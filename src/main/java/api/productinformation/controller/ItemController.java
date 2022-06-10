@@ -21,9 +21,9 @@ public class ItemController {
         return itemService.saveItem(itemAdd);
     }
 
-    @DeleteMapping("")
-    public String deleteItem(ItemSearch itemSearch){
-        itemService.deleteItem(itemSearch);
+    @DeleteMapping("/{item_id}")
+    public String deleteItem(@PathVariable("item_id") Long id){
+        itemService.deleteItem(id);
         return "ok";
     }
 

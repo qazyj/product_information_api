@@ -78,9 +78,7 @@ class PromotionServiceTest {
         PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
 
         promotionRepository.findById(promotionDto.getId()).get();
-        PromotionSearch promotionSearch = new PromotionSearch();
-        promotionSearch.setId(promotionDto.getId());
-        promotionService.deletePromotion(promotionSearch);
+        promotionService.deletePromotion(promotionDto.getId());
 
         //when
         Optional<Promotion> findPromotion = promotionRepository.findById(promotionDto.getId());
