@@ -3,7 +3,6 @@ package api.productinformation.service;
 import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.promotion.PromotionAdd;
 import api.productinformation.entity.promotion.PromotionDto;
-import api.productinformation.entity.promotion.PromotionSearch;
 import api.productinformation.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

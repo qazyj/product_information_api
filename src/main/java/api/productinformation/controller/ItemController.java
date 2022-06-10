@@ -3,7 +3,6 @@ package api.productinformation.controller;
 import api.productinformation.entity.item.ItemAdd;
 import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.item.ItemPromotionDto;
-import api.productinformation.entity.item.ItemSearch;
 import api.productinformation.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
