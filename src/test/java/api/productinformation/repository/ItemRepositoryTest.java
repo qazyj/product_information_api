@@ -107,13 +107,11 @@ class ItemRepositoryTest {
     }
 
     @Test
-    public void 프로모션_정보() throws Exception {
+    public void 아이템_프로모션_정보_가져온_후_salesPrice_정렬() throws Exception {
         //given
 
         //when
         Item byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L).get();
-
-        //then
         Collections.sort(byIdIncludeMinPromotion.getItemPromotions(), new Comparator<ItemPromotion>() {
             @Override
             public int compare(ItemPromotion o1, ItemPromotion o2) {
@@ -121,8 +119,8 @@ class ItemRepositoryTest {
             }
         });
 
-        for(ItemPromotion itemPromotion : byIdIncludeMinPromotion.getItemPromotions()){
-            System.out.println("value = " + itemPromotion.getSalePrice());
-        }
+        //then
+        assertThat(byIdIncludeMinPromotion.getItemPromotions().get(0).getSalePrice()).isEqualTo(18000L);
+        assertThat(byIdIncludeMinPromotion.getItemPromotions().get(1).getSalePrice()).isEqualTo(19000L);
     }
 }
