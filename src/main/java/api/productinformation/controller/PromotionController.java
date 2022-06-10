@@ -1,6 +1,7 @@
 package api.productinformation.controller;
 
 import api.productinformation.entity.promotion.PromotionAdd;
+import api.productinformation.entity.promotion.PromotionDto;
 import api.productinformation.entity.promotion.PromotionSearch;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserSearch;
@@ -18,9 +19,8 @@ public class PromotionController {
     private final PromotionService promotionService;
 
     @PostMapping("")
-    public String savePromotion(PromotionAdd promotionAdd){
-        promotionService.savePromotion(promotionAdd);
-        return "ok";
+    public PromotionDto savePromotion(PromotionAdd promotionAdd){
+        return promotionService.savePromotion(promotionAdd);
     }
 
     @DeleteMapping("")
