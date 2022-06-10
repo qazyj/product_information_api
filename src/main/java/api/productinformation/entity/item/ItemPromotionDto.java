@@ -1,5 +1,6 @@
 package api.productinformation.entity.item;
 
+import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.promotion.PromotionDto;
@@ -36,6 +37,14 @@ public class ItemPromotionDto {
         else
             this.itemType = "기업회원상품";
         this.itemPrice = item.getItemPrice();
+        this.salePrice = setSalePrice(item, promotion);
         this.promotionDto = new PromotionDto(promotion);
+    }
+
+    public Long setSalePrice(Item item, Promotion promotion) {
+        if(promotion.getDiscountAmount() != null)
+            return item.getItemPrice() - promotion.getDiscountAmount();
+        else
+            return item.getItemPrice() - (long)(item.getItemPrice()*promotion.getDiscountRate());
     }
 }

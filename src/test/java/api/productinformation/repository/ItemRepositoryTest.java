@@ -1,9 +1,9 @@
 package api.productinformation.repository;
 
+import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.item.ItemPromotionDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,9 +11,12 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -108,11 +111,18 @@ class ItemRepositoryTest {
         //given
 
         //when
-        List<ItemPromotionDto> byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L);
+        Item byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L).get();
 
         //then
-        for(ItemPromotionDto itemPromotionDto : byIdIncludeMinPromotion){
-            System.out.println("itemPromotionDto = " + itemPromotionDto);
+        Collections.sort(byIdIncludeMinPromotion.getItemPromotions(), new Comparator<ItemPromotion>() {
+            @Override
+            public int compare(ItemPromotion o1, ItemPromotion o2) {
+                return o1.getSalePrice().intValue() - o2.getSalePrice().intValue();
+            }
+        });
+
+        for(ItemPromotion itemPromotion : byIdIncludeMinPromotion.getItemPromotions()){
+            System.out.println("value = " + itemPromotion.getSalePrice());
         }
     }
 }
