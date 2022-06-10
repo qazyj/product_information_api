@@ -11,32 +11,31 @@ import java.time.LocalDate;
 public class ItemPromotionDto {
     private Long itemId;
     private String itemName;
-    private Type itemType;
+    private String itemType;
     private Long itemPrice;
     private Long salePrice;
-    private LocalDate itemStartDate;
-    private LocalDate itemEndDate;
     private PromotionDto promotionDto;
 
-    public ItemPromotionDto(Long itemId, String itemName, Type itemType, Long itemPrice, Long salePrice,
-                            LocalDate itemStartDate, LocalDate itemEndDate, Promotion promotion) {
+    public ItemPromotionDto(Long itemId, String itemName, Type itemType, Long itemPrice, Long salePrice, Promotion promotion) {
         this.itemId = itemId;
         this.itemName = itemName;
-        this.itemType = itemType;
+        if(itemType.equals(Type.NORMAL))
+            this.itemType = "일반";
+        else
+            this.itemType = "기업회원상품";
         this.itemPrice = itemPrice;
         this.salePrice = salePrice;
-        this.itemStartDate = itemStartDate;
-        this.itemEndDate = itemEndDate;
         this.promotionDto = new PromotionDto(promotion);
     }
 
     public ItemPromotionDto(Item item, Promotion promotion){
         this.itemId = item.getId();
         this.itemName = item.getItemName();
-        this.itemType = item.getItemType();
+        if(item.getItemType().equals(Type.NORMAL))
+            this.itemType = "일반";
+        else
+            this.itemType = "기업회원상품";
         this.itemPrice = item.getItemPrice();
-        this.itemStartDate = item.getStartDate();
-        this.itemEndDate = item.getEndDate();
         this.promotionDto = new PromotionDto(promotion);
     }
 }
