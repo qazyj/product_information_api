@@ -1,12 +1,14 @@
 package api.productinformation.repository;
 
 import api.productinformation.entity.Type;
+import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
@@ -34,5 +36,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .setParameter("type", type)
                 .setParameter("now", now)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<Item> findByIdIncludeMinPromotion(Long id) {
+        return Optional.ofNullable(em.createQuery("select distinct i from Item i" +
+                        " join fetch i.itemPromotions itempromotions" +
+                        " join fetch itempromotions.promotion p" +
+                        " where i.id = :id", Item.class)
+                .setParameter("id", id)
+                .getSingleResult());
     }
 }

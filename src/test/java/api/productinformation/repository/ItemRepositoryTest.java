@@ -1,5 +1,6 @@
 package api.productinformation.repository;
 
+import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
@@ -10,9 +11,12 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -100,5 +104,23 @@ class ItemRepositoryTest {
 
         //then
         assertThat(results.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void 아이템_프로모션_정보_가져온_후_salesPrice_정렬() throws Exception {
+        //given
+
+        //when
+        Item byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L).get();
+        Collections.sort(byIdIncludeMinPromotion.getItemPromotions(), new Comparator<ItemPromotion>() {
+            @Override
+            public int compare(ItemPromotion o1, ItemPromotion o2) {
+                return o1.getSalePrice().intValue() - o2.getSalePrice().intValue();
+            }
+        });
+
+        //then
+        assertThat(byIdIncludeMinPromotion.getItemPromotions().get(0).getSalePrice()).isEqualTo(18000L);
+        assertThat(byIdIncludeMinPromotion.getItemPromotions().get(1).getSalePrice()).isEqualTo(19000L);
     }
 }

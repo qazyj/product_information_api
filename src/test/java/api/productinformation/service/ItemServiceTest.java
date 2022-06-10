@@ -1,10 +1,7 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.Type;
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.item.ItemAdd;
-import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.item.ItemSearch;
+import api.productinformation.entity.item.*;
 import api.productinformation.repository.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +68,27 @@ class ItemServiceTest {
 
         //then
         assertThat(findItem).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void 아이템_프로모션_api() throws Exception {
+        //given
+
+        //when
+        Optional<ItemPromotionDto> itemPromotionDto = itemService.findItemPromotionById(1L);
+
+        //then
+        assertThat(itemPromotionDto.get().getSalePrice()).isEqualTo(19000L);
+    }
+
+    @Test
+    public void 아이템_프로모션_api_saleprice가_0인_경우_null_반환() throws Exception {
+        //given
+
+        //when
+        Optional<ItemPromotionDto> itemPromotionDto = itemService.findItemPromotionById(2L);
+
+        //then
+        assertThat(itemPromotionDto).isEqualTo(Optional.empty());
     }
 }

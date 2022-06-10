@@ -1,14 +1,14 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.item.ItemAdd;
-import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.item.ItemSearch;
+import api.productinformation.entity.ItemPromotion;
+import api.productinformation.entity.item.*;
 import api.productinformation.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -29,5 +29,49 @@ public class ItemService {
     public void deleteItem(ItemSearch itemSearch){
         Optional<Item> item = itemRepository.findById(itemSearch.getId());
         itemRepository.delete(item.get());
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<ItemPromotionDto> findItemPromotionById(Long id) {
+        Optional<Item> findItem = itemRepository.findByIdIncludeMinPromotion(id);
+        //if(findItem.isEmpty()) 널인경우 예외
+        System.out.println("check " + findItem.get().getItemName());
+
+        sortSalePrice(findItem);
+
+        return Optional.ofNullable(getItemPromotionDto(findItem));
+    }
+
+    /**
+     * @return 정렬된 가격 순으로 아이템 날짜와 프로모션 날짜가 겹치면 dto 변환 후
+     * 단, 없을 경우 null 리턴
+     */
+    private ItemPromotionDto getItemPromotionDto(Optional<Item> findItem) {
+
+        for(ItemPromotion itemPromotion : findItem.get().getItemPromotions()){
+            if(itemPromotion.getSalePrice() <= 0L) continue;
+
+            if((findItem.get().getStartDate().compareTo(itemPromotion.getStartDate()) >= 0
+                    && findItem.get().getStartDate().compareTo(itemPromotion.getEndDate()) < 0) ||
+                    (findItem.get().getEndDate().compareTo(itemPromotion.getStartDate()) >= 0
+                            && findItem.get().getEndDate().compareTo(itemPromotion.getEndDate()) < 0) ||
+                    (itemPromotion.getStartDate().compareTo(findItem.get().getStartDate()) >= 0
+                            && itemPromotion.getStartDate().compareTo(findItem.get().getEndDate()) < 0) ||
+                    (itemPromotion.getEndDate().compareTo(findItem.get().getStartDate()) >= 0
+                            && itemPromotion.getEndDate().compareTo(findItem.get().getEndDate()) < 0)) {
+                return new ItemPromotionDto(findItem.get(), itemPromotion.getPromotion());
+            }
+        }
+        // 없는 경우 프로모션 없으면 예외
+        return null;
+    }
+
+    private void sortSalePrice(Optional<Item> findItem) {
+        Collections.sort(findItem.get().getItemPromotions(), new Comparator<ItemPromotion>() {
+            @Override
+            public int compare(ItemPromotion o1, ItemPromotion o2) {
+                return o1.getSalePrice().intValue() - o2.getSalePrice().intValue();
+            }
+        });
     }
 }
