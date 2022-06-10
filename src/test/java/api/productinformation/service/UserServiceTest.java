@@ -5,7 +5,6 @@ import api.productinformation.entity.UserState;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
-import api.productinformation.entity.user.UserSearch;
 import api.productinformation.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +53,7 @@ class UserServiceTest {
         // InitDB 클래스에서 저장한 userItem
         UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
         UserDto userDto = userService.saveUser(userAdd);
-        UserSearch userSearch = new UserSearch();
-        userSearch.setId(userDto.getUserId());
-        userService.deleteUser(userSearch);
+        userService.deleteUser(userDto.getUserId());
 
         //when
         Optional<User> findUser = userRepository.findById(userDto.getUserId());
