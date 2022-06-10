@@ -3,6 +3,7 @@ package api.productinformation.repository;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.item.Item;
 import api.productinformation.entity.item.ItemDto;
+import api.productinformation.entity.item.ItemPromotionDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -100,5 +101,18 @@ class ItemRepositoryTest {
 
         //then
         assertThat(results.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void 프로모션_정보() throws Exception {
+        //given
+
+        //when
+        List<ItemPromotionDto> byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L);
+
+        //then
+        for(ItemPromotionDto itemPromotionDto : byIdIncludeMinPromotion){
+            System.out.println("itemPromotionDto = " + itemPromotionDto);
+        }
     }
 }

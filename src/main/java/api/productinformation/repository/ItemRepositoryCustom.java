@@ -9,5 +9,5 @@ import java.util.List;
 public interface ItemRepositoryCustom {
     List<ItemDto> findCanBuyItemList();
     List<ItemDto> findCanBuyItemListByType(Type type);
-    ItemPromotionDto findByIdIncludeMinPromotion(Long id);
+    List<ItemPromotionDto> findByIdIncludeMinPromotion(Long id);
 }
