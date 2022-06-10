@@ -29,8 +29,8 @@ public class PromotionService {
     }
 
     @Transactional
-    public void deletePromotion(PromotionSearch promotionSearch){
-        Optional<Promotion> promotion = promotionRepository.findById(promotionSearch.getId());
+    public void deletePromotion(Long id){
+        Optional<Promotion> promotion = promotionRepository.findById(id);
         promotionRepository.delete(promotion.get());
     }
 }

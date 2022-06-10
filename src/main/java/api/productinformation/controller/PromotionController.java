@@ -5,10 +5,7 @@ import api.productinformation.entity.promotion.PromotionDto;
 import api.productinformation.entity.promotion.PromotionSearch;
 import api.productinformation.service.PromotionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +18,9 @@ public class PromotionController {
         return promotionService.savePromotion(promotionAdd);
     }
 
-    @DeleteMapping("")
-    public String deleteUser(PromotionSearch promotionSearch){
-        promotionService.deletePromotion(promotionSearch);
+    @DeleteMapping("/{promotion_id}")
+    public String deleteUser(@PathVariable("{promotion_id") Long id){
+        promotionService.deletePromotion(id);
         return "ok";
     }
 }
