@@ -15,6 +15,8 @@ public class ItemPromotionDto {
     private String itemType;
     private Long itemPrice;
     private Long salePrice;
+    private LocalDate itemStartDate;
+    private LocalDate itemEndDate;
     private PromotionDto promotionDto;
 
     public ItemPromotionDto(Long itemId, String itemName, Type itemType, Long itemPrice, Long salePrice, Promotion promotion) {
@@ -38,6 +40,8 @@ public class ItemPromotionDto {
             this.itemType = "기업회원상품";
         this.itemPrice = item.getItemPrice();
         this.salePrice = setSalePrice(item, promotion);
+        this.itemStartDate = item.getStartDate();
+        this.itemEndDate = item.getEndDate();
         this.promotionDto = new PromotionDto(promotion);
     }
 
