@@ -20,7 +20,7 @@ public class ItemAdd {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemPrice = itemPrice;
-        this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-        this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d"));
+        this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d"));
     }
 }

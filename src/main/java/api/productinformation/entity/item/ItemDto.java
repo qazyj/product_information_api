@@ -14,10 +14,13 @@ public class ItemDto {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public ItemDto(Long id, String itemName, String itemType, Long itemPrice, LocalDate startDate, LocalDate endDate) {
+    public ItemDto(Long id, String itemName, Type itemType, Long itemPrice, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.itemName = itemName;
-        this.itemType = itemType;
+        if(itemType.equals(Type.NORMAL))
+            this.itemType = "일반";
+        else
+            this.itemType = "기업회원상품";
         this.itemPrice = itemPrice;
         this.startDate = startDate;
         this.endDate = endDate;

@@ -5,9 +5,11 @@ import api.productinformation.entity.ItemPromotion;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Entity
@@ -29,6 +31,19 @@ public class Promotion extends DateEntity {
     private Double discountRate;
 
     //==생성 메서드==//
+    public static Promotion createPromotion(String promotionName, Integer discountAmount, Double discountRate,
+                                            String startDate, String endDate){
+        Promotion promotion = new Promotion();
+        promotion.promotionName = promotionName;
+        if(discountAmount == null)
+            promotion.discountRate = discountRate;
+        else
+            promotion.discountAmount = discountAmount;
+        promotion.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
+        promotion.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
+        return promotion;
+    }
+
     public static Promotion createPromotion(String promotionName, Integer discountAmount, Double discountRate,
                                             LocalDate startDate, LocalDate endDate){
         Promotion promotion = new Promotion();
