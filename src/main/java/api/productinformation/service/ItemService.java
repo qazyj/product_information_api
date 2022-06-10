@@ -32,13 +32,14 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public ItemPromotionDto findItemPromotionById(Long id) {
+    public Optional<ItemPromotionDto> findItemPromotionById(Long id) {
         Optional<Item> findItem = itemRepository.findByIdIncludeMinPromotion(id);
         //if(findItem.isEmpty()) 널인경우 예외
+        System.out.println("check " + findItem.get().getItemName());
 
         sortSalePrice(findItem);
 
-        return getItemPromotionDto(findItem);
+        return Optional.ofNullable(getItemPromotionDto(findItem));
     }
 
     /**
@@ -46,13 +47,18 @@ public class ItemService {
      * 단, 없을 경우 null 리턴
      */
     private ItemPromotionDto getItemPromotionDto(Optional<Item> findItem) {
+
         for(ItemPromotion itemPromotion : findItem.get().getItemPromotions()){
             if(itemPromotion.getSalePrice() <= 0L) continue;
 
-            if((findItem.get().getStartDate().isAfter(itemPromotion.getStartDate())
-                    && findItem.get().getStartDate().isBefore(itemPromotion.getEndDate())) ||
-                    (findItem.get().getEndDate().isAfter(itemPromotion.getStartDate())
-                            && findItem.get().getEndDate().isBefore(itemPromotion.getEndDate()))) {
+            if((findItem.get().getStartDate().compareTo(itemPromotion.getStartDate()) >= 0
+                    && findItem.get().getStartDate().compareTo(itemPromotion.getEndDate()) < 0) ||
+                    (findItem.get().getEndDate().compareTo(itemPromotion.getStartDate()) >= 0
+                            && findItem.get().getEndDate().compareTo(itemPromotion.getEndDate()) < 0) ||
+                    (itemPromotion.getStartDate().compareTo(findItem.get().getStartDate()) >= 0
+                            && itemPromotion.getStartDate().compareTo(findItem.get().getEndDate()) < 0) ||
+                    (itemPromotion.getEndDate().compareTo(findItem.get().getStartDate()) >= 0
+                            && itemPromotion.getEndDate().compareTo(findItem.get().getEndDate()) < 0)) {
                 return new ItemPromotionDto(findItem.get(), itemPromotion.getPromotion());
             }
         }
