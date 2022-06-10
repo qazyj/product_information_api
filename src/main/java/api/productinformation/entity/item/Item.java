@@ -42,8 +42,8 @@ public class Item extends DateEntity {
         else
             item.itemType = Type.CORPORATE;
         item.itemPrice = itemPrice;
-        item.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-        item.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        item.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
+        item.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
         return item;
     }
 

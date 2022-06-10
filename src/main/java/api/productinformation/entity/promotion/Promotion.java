@@ -39,8 +39,8 @@ public class Promotion extends DateEntity {
             promotion.discountRate = discountRate;
         else
             promotion.discountAmount = discountAmount;
-        promotion.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-        promotion.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.MM.dd")));
+        promotion.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
+        promotion.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
         return promotion;
     }
 
