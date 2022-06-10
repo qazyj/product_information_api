@@ -2,6 +2,9 @@ package api.productinformation.service;
 
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.item.*;
+import api.productinformation.entity.user.User;
+import api.productinformation.entity.user.UserAdd;
+import api.productinformation.entity.user.UserDto;
 import api.productinformation.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
