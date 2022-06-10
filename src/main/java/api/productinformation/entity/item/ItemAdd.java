@@ -1,8 +1,10 @@
 package api.productinformation.entity.item;
 
 import api.productinformation.entity.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +15,9 @@ public class ItemAdd {
     private String itemName;
     private String itemType;
     private Long itemPrice;
+    @DateTimeFormat(pattern = "yyyy.M.d")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy.M.d")
     private LocalDate endDate;
 
     public ItemAdd(String itemName, String itemType, Long itemPrice, String startDate, String endDate) {
