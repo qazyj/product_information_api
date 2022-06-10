@@ -19,7 +19,7 @@ public class PromotionController {
     }
 
     @DeleteMapping("/{promotion_id}")
-    public String deleteUser(@PathVariable("{promotion_id") Long id){
+    public String deleteUser(@PathVariable("promotion_id") Long id){
         promotionService.deletePromotion(id);
         return "ok";
     }
