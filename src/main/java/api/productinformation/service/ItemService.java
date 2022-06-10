@@ -29,8 +29,8 @@ public class ItemService {
     }
 
     @Transactional
-    public void deleteItem(ItemSearch itemSearch){
-        Optional<Item> item = itemRepository.findById(itemSearch.getId());
+    public void deleteItem(Long id){
+        Optional<Item> item = itemRepository.findById(id);
         itemRepository.delete(item.get());
     }
 
