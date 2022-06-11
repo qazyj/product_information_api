@@ -3,11 +3,12 @@ package api.productinformation.entity.user;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.UserState;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-@Data
+@Getter
 public class UserDto {
     private Long userId;
     private String username;

@@ -39,10 +39,14 @@ public class ItemPromotionDto {
         else
             this.itemType = "기업회원상품";
         this.itemPrice = item.getItemPrice();
-        this.salePrice = setSalePrice(item, promotion);
         this.itemStartDate = item.getStartDate();
         this.itemEndDate = item.getEndDate();
-        this.promotionDto = new PromotionDto(promotion);
+        if(promotion!=null) {
+            this.salePrice = setSalePrice(item, promotion);
+            this.promotionDto = new PromotionDto(promotion);
+        } else {
+            this.salePrice = this.itemPrice;
+        }
     }
 
     public Long setSalePrice(Item item, Promotion promotion) {

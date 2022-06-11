@@ -3,8 +3,13 @@ package api.productinformation.service;
 import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.promotion.PromotionAdd;
 import api.productinformation.entity.promotion.PromotionDto;
+import api.productinformation.entity.user.UserDto;
+import api.productinformation.exception.errorcode.CommonErrorCode;
+import api.productinformation.exception.handler.NotFoundResourceException;
 import api.productinformation.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,19 +22,22 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
 
     @Transactional
-    public PromotionDto savePromotion(PromotionAdd promotionAdd){
+    public ResponseEntity<Object> savePromotion(PromotionAdd promotionAdd){
         Promotion savedPromotion = promotionRepository.save(Promotion.createPromotion(
                 promotionAdd.getPromotionName(),
                 promotionAdd.getDiscountAmount(),
                 promotionAdd.getDiscountRate(),
                 promotionAdd.getStartDate(),
                 promotionAdd.getEndDate()));
-        return new PromotionDto(savedPromotion);
+        return new ResponseEntity<>(new PromotionDto(savedPromotion), HttpStatus.OK);
     }
 
     @Transactional
-    public void deletePromotion(Long id){
-        Optional<Promotion> promotion = promotionRepository.findById(id);
-        promotionRepository.delete(promotion.get());
+    public ResponseEntity<Object> deletePromotion(Long id){
+        Promotion promotion = promotionRepository.findById(id).orElseThrow(
+                () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
+
+        promotionRepository.delete(promotion);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

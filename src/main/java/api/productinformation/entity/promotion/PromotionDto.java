@@ -2,13 +2,14 @@ package api.productinformation.entity.promotion;
 
 import api.productinformation.entity.ItemPromotion;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
 public class PromotionDto {
     private Long id;
     private String promotionName;

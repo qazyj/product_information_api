@@ -9,6 +9,7 @@ import api.productinformation.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,7 @@ class UserServiceTest {
     public void 유저_등록() throws Exception {
         //given
         UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
-        UserDto userDto = userService.saveUser(userAdd);
+        ResponseEntity<Object> userDto = userService.saveUser(userAdd);
 
         //when
         User findUser = userRepository.findById(userDto.getUserId()).get();
