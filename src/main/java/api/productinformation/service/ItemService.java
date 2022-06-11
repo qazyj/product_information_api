@@ -21,10 +21,10 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public ResponseEntity<Object> saveItem(ItemDto itemDto){
+    public ResponseEntity<Object> saveItem(ItemAdd itemAdd){
 
-        Item savedItem = itemRepository.save(Item.createItem(itemDto.getItemName(), itemDto.getItemType(), itemDto.getItemPrice(),
-                itemDto.getStartDate(), itemDto.getEndDate()));
+        Item savedItem = itemRepository.save(Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
+                itemAdd.getStartDate(), itemAdd.getEndDate()));
         return new ResponseEntity<>(new ItemDto(savedItem), HttpStatus.OK);
     }
 
