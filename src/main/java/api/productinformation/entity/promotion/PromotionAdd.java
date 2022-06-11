@@ -1,6 +1,7 @@
 package api.productinformation.entity.promotion;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Getter
-@Setter
+@NoArgsConstructor
 public class PromotionAdd {
     private String promotionName;
     private Integer discountAmount;

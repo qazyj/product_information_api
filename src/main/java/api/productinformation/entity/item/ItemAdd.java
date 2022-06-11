@@ -3,6 +3,7 @@ package api.productinformation.entity.item;
 import api.productinformation.entity.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Getter
-@Setter
+@NoArgsConstructor
 public class ItemAdd {
     private String itemName;
     private String itemType;
