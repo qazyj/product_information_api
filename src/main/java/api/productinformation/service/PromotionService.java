@@ -27,8 +27,8 @@ public class PromotionService {
                 promotionAdd.getPromotionName(),
                 promotionAdd.getDiscountAmount(),
                 promotionAdd.getDiscountRate(),
-                promotionAdd.getStartDate(),
-                promotionAdd.getEndDate()));
+                promotionAdd.getStartDateLocalType(),
+                promotionAdd.getEndDateLocalType()));
         return new ResponseEntity<>(new PromotionDto(savedPromotion), HttpStatus.OK);
     }
 

@@ -24,7 +24,7 @@ public class ItemService {
     public ResponseEntity<Object> saveItem(ItemAdd itemAdd){
 
         Item savedItem = itemRepository.save(Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
-                itemAdd.getStartDate(), itemAdd.getEndDate()));
+                itemAdd.getStartDateLocalType(), itemAdd.getEndDateLocalType()));
         return new ResponseEntity<>(new ItemDto(savedItem), HttpStatus.OK);
     }
 
