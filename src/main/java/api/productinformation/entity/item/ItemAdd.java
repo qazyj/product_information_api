@@ -16,16 +16,25 @@ public class ItemAdd {
     private String itemName;
     private String itemType;
     private Long itemPrice;
+    private String startDate;
+    private String endDate;
+
+
     @DateTimeFormat(pattern = "yyyy.M.d")
-    private LocalDate startDate;
+    private LocalDate startDateLocalType;
     @DateTimeFormat(pattern = "yyyy.M.d")
-    private LocalDate endDate;
+    private LocalDate endDateLocalType;
 
     public ItemAdd(String itemName, String itemType, Long itemPrice, String startDate, String endDate) {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemPrice = itemPrice;
-        this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d"));
-        this.endDate = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d"));
+        this.startDate = startDate;
+        this.endDate = startDate;
+    }
+
+    public void StringToLocalDate() {
+        this.startDateLocalType = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d"));
+        this.endDateLocalType = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d"));
     }
 }

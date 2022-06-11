@@ -16,6 +16,7 @@ public class PromotionController {
 
     @PostMapping("")
     public ResponseEntity<Object> savePromotion(@RequestBody PromotionAdd promotionAdd){
+        promotionAdd.StringToLocalDate();
         return promotionService.savePromotion(promotionAdd);
     }
 
