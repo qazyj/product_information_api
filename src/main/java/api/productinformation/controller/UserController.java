@@ -1,11 +1,13 @@
 package api.productinformation.controller;
 
+import api.productinformation.entity.RequestDto;
 import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
 import api.productinformation.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +19,18 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<Object> saveUser(UserAdd userAdd){
+    public ResponseEntity<Object> saveUser(@RequestBody UserAdd userAdd){
         return userService.saveUser(userAdd);
     }
 
-    @DeleteMapping("/{user_id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable("user_id") Long id){
+    @DeleteMapping("")
+    public ResponseEntity<Object> deleteUser(@RequestBody RequestDto requestDto){
 
-        return userService.deleteUser(id);
+        return userService.deleteUser(requestDto.getId());
     }
 
-    @GetMapping("/itemlist/{user_id}")
-    public ResponseEntity<Object> canBuyItemList(@PathVariable("user_id") Long id){
-        return userService.canBuyItemList(id);
+    @GetMapping("/itemlist")
+    public ResponseEntity<Object> canBuyItemList(@RequestBody RequestDto requestDto){
+        return userService.canBuyItemList(requestDto.getId());
     }
 }

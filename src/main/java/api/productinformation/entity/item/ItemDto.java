@@ -3,10 +3,12 @@ package api.productinformation.entity.item;
 import api.productinformation.entity.Type;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
+@NoArgsConstructor
 public class ItemDto {
     private Long id;
     private String itemName;

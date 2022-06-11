@@ -3,9 +3,11 @@ package api.productinformation.entity.user;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.UserState;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@NoArgsConstructor
 public class UserAdd {
     private String username;
     private String userType;
