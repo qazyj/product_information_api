@@ -1,13 +1,20 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.Type;
+import api.productinformation.entity.UserState;
 import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.user.User;
 import api.productinformation.entity.user.UserAdd;
 import api.productinformation.entity.user.UserDto;
+import api.productinformation.exception.errorcode.CommonErrorCode;
+import api.productinformation.exception.errorcode.UserErrorCode;
+import api.productinformation.exception.handler.ExitUserException;
+import api.productinformation.exception.handler.NotFoundResourceException;
 import api.productinformation.repository.ItemRepository;
 import api.productinformation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,28 +29,35 @@ public class UserService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public UserDto saveUser(UserAdd userAdd){
+    public ResponseEntity<Object> saveUser(UserAdd userAdd){
+
         User savedUser = userRepository.save(User.createUser(userAdd.getUsername(),
                 userAdd.getUserType(), userAdd.getUserState()));
 
-        return new UserDto(savedUser);
+        return new ResponseEntity<>(new UserDto(savedUser), HttpStatus.OK);
     }
 
     @Transactional
-    public void deleteUser(Long id){
-        Optional<User> user = userRepository.findById(id);
-        userRepository.delete(user.get());
+    public ResponseEntity<Object> deleteUser(Long id){
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
+
+        userRepository.delete(user);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @Transactional(readOnly = true)
-    public List<ItemDto> canBuyItemList(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        // user null일 경우 예외 처리 해야함
-        // 유저가 탈퇴한 경우 예외 처리
-        //if(user.get().getUserState().equals(UserState.UNUSE))
-        if(user.get().getUserType().equals(Type.NORMAL))
-            return itemRepository.findCanBuyItemListByType(Type.NORMAL);
+    public ResponseEntity<Object> canBuyItemList(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
+
+        if (user.getUserState() == UserState.UNUSE) {
+            throw new ExitUserException(UserErrorCode.EXIT_USER);
+        }
+
+        if(user.getUserType().equals(Type.NORMAL))
+            return new ResponseEntity<>(itemRepository.findCanBuyItemListByType(Type.NORMAL), HttpStatus.OK);
         else
-            return itemRepository.findCanBuyItemList();
+            return new ResponseEntity<>(itemRepository.findCanBuyItemList(), HttpStatus.OK);
     }
 }

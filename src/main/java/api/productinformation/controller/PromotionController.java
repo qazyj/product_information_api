@@ -4,6 +4,7 @@ import api.productinformation.entity.promotion.PromotionAdd;
 import api.productinformation.entity.promotion.PromotionDto;
 import api.productinformation.service.PromotionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,13 +14,12 @@ public class PromotionController {
     private final PromotionService promotionService;
 
     @PostMapping("")
-    public PromotionDto savePromotion(PromotionAdd promotionAdd){
+    public ResponseEntity<Object> savePromotion(PromotionAdd promotionAdd){
         return promotionService.savePromotion(promotionAdd);
     }
 
     @DeleteMapping("/{promotion_id}")
-    public String deleteUser(@PathVariable("promotion_id") Long id){
-        promotionService.deletePromotion(id);
-        return "ok";
+    public ResponseEntity<Object> deleteUser(@PathVariable("promotion_id") Long id){
+        return promotionService.deletePromotion(id);
     }
 }

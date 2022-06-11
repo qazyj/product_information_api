@@ -2,10 +2,11 @@ package api.productinformation.entity.item;
 
 import api.productinformation.entity.Type;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 public class ItemDto {
     private Long id;
     private String itemName;
