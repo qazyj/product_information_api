@@ -18,8 +18,8 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping("")
-    public ResponseEntity<Object> saveItem(@RequestBody ItemDto itemDto){
-        return itemService.saveItem(itemDto);
+    public ResponseEntity<Object> saveItem(@RequestBody ItemAdd itemAdd){
+        return itemService.saveItem(itemAdd);
     }
 
     @DeleteMapping("")

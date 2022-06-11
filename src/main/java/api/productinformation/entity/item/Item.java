@@ -22,7 +22,7 @@ public class Item extends DateEntity {
     @Column(name = "item_id")
     private Long id;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemPromotion> itemPromotions = new ArrayList<>();
 
     private String itemName;
