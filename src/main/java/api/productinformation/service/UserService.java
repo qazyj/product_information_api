@@ -22,13 +22,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
 
-    @Transactional
     public ResponseEntity<Object> saveUser(UserAdd userAdd){
 
         User savedUser = userRepository.save(User.createUser(userAdd.getUsername(),
@@ -37,7 +36,6 @@ public class UserService {
         return new ResponseEntity<>(new UserDto(savedUser), HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<Object> deleteUser(Long id){
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));

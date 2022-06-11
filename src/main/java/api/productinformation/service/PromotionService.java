@@ -16,12 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class PromotionService {
     private final PromotionRepository promotionRepository;
 
-    @Transactional
     public ResponseEntity<Object> savePromotion(PromotionAdd promotionAdd){
         Promotion savedPromotion = promotionRepository.save(Promotion.createPromotion(
                 promotionAdd.getPromotionName(),
@@ -32,7 +31,6 @@ public class PromotionService {
         return new ResponseEntity<>(new PromotionDto(savedPromotion), HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<Object> deletePromotion(Long id){
         Promotion promotion = promotionRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));

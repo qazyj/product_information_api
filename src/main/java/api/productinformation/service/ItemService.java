@@ -15,12 +15,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
 
-    @Transactional
     public ResponseEntity<Object> saveItem(ItemAdd itemAdd){
 
         Item savedItem = itemRepository.save(Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
@@ -28,7 +27,6 @@ public class ItemService {
         return new ResponseEntity<>(new ItemDto(savedItem), HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<Object> deleteItem(Long id){
         Item item = itemRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
