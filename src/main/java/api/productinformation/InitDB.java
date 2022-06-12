@@ -43,15 +43,16 @@ public class InitDB {
             em.persist(user4);
 
             Item item1 = Item.createItem("노브랜드 버터링", "일반", 20000L,
-                    "2022,1,1", "2022,1,1");
+                    "2022.1.1", "2022.1.1");
             Item item2 = Item.createItem("매일 아침 우유", "일반", 1000L,
-                    "2021,1,1", "2023,5,5");
+                    "2021.1.1", "2023.5.5");
             Item item3 = Item.createItem("나이키 운동화", "기업회원상품", 40000L,
-                    "2020,1,1", "2023,12,31");
+                    "2020.1.1", "2023.12.31");
             Item item4 = Item.createItem("스타벅스 써머 텀블러", "일반", 15000L,
-                    "2021,1,1", "2022,8,1");
+                    "2021.1.1", "2022.8.1");
             Item item5 = Item.createItem("크리스마스 케이크", "일반", 30000L,
-                    "2022,12,24", "2022,12,31");
+                    "2022.12.24", "2022.12.31");
+
             em.persist(item1);
             em.persist(item2);
             em.persist(item3);
@@ -59,11 +60,11 @@ public class InitDB {
             em.persist(item5);
 
             Promotion promotion1 = Promotion.createPromotion("2022 쓱데이", 1000, null,
-                    "2022,5,1", "2022,7,1");
+                    "2022.5.1", "2022.7.1");
             Promotion promotion2 = Promotion.createPromotion("스타벅스몰 오픈기념", null, 0.05,
-                    "2021,1,5", "2022,12,31");
+                    "2021.1.5", "2022.12.31");
             Promotion promotion3 = Promotion.createPromotion("2021 쓱데이", 2000, null,
-                    "2021,1,1", "2021,1,31");
+                    "2021.1.1", "2021.1.31");
             em.persist(promotion1);
             em.persist(promotion2);
             em.persist(promotion3);
