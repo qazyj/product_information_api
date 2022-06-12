@@ -1,6 +1,8 @@
 package api.productinformation.service;
 
 import api.productinformation.dto.promotion.PromotionDto;
+import api.productinformation.entity.Item;
+import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Promotion;
 import api.productinformation.dto.promotion.NewPromotion;
 import api.productinformation.exception.errorcode.CommonErrorCode;
@@ -8,6 +10,8 @@ import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidParameterException;
 import api.productinformation.exception.handler.InvalidStartdateAfterEnddateException;
 import api.productinformation.exception.handler.NotFoundResourceException;
+import api.productinformation.repository.ItemPromotionRepository;
+import api.productinformation.repository.ItemRepository;
 import api.productinformation.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,12 +20,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PromotionService {
     private final PromotionRepository promotionRepository;
+    private final ItemRepository itemRepository;
+    private final ItemPromotionRepository itemPromotionRepository;
 
     public ResponseEntity<Object> savePromotion(NewPromotion newPromotion){
         checkArgsIsNull(newPromotion);
@@ -43,6 +50,14 @@ public class PromotionService {
                 newPromotion.getDiscountRate(),
                 newPromotion.getStartDateLocalType(),
                 newPromotion.getEndDateLocalType()));
+
+        List<Item> promotionConnectableItem =
+                itemRepository.findPromotionConnectableItem(savedPromotion.getStartDate(), savedPromotion.getEndDate());
+
+        // 아이템과 프로모션 중 기간이 겹치면 매핑
+        for(Item item : promotionConnectableItem){
+            itemPromotionRepository.save(ItemPromotion.createItemPromotion(item, savedPromotion));
+        }
 
         return new ResponseEntity<>(PromotionDto.from(savedPromotion), HttpStatus.OK);
     }

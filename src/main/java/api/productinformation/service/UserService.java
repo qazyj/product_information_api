@@ -1,7 +1,9 @@
 package api.productinformation.service;
 
+import api.productinformation.dto.item.ItemDto;
 import api.productinformation.dto.user.NewUser;
 import api.productinformation.dto.user.UserDto;
+import api.productinformation.entity.Item;
 import api.productinformation.entity.UserType;
 import api.productinformation.entity.UserState;
 import api.productinformation.entity.User;
@@ -17,6 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -56,10 +63,16 @@ public class UserService {
         // 탈퇴 예외처리
         user.withdraw();
 
-        if(user.getUserType().equals(UserType.NORMAL))
-            return new ResponseEntity<>(itemRepository.findCanBuyItemListByType(UserType.NORMAL), HttpStatus.OK);
-        else
-            return new ResponseEntity<>(itemRepository.findCanBuyItemList(), HttpStatus.OK);
+        if(user.getUserType().equals(UserType.NORMAL)) {
+            List<ItemDto> result = itemRepository.findCanBuyItemListByType(UserType.NORMAL).stream()
+                    .map(ItemDto::from).collect(Collectors.toList());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            List<ItemDto> result = itemRepository.findCanBuyItemList().stream()
+                    .map(ItemDto::from).collect(Collectors.toList());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
     }
 
     private void checkArgsIsNull(NewUser newUser) {

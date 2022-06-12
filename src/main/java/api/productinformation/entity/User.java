@@ -43,5 +43,7 @@ public class User {
         if(this.userState == UserState.UNUSE){
             throw new ExitUserException(UserErrorCode.EXIT_USER);
         }
+
+        this.userState = UserState.UNUSE;
     }
 }

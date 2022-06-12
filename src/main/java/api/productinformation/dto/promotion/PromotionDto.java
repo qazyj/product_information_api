@@ -4,6 +4,8 @@ import api.productinformation.entity.Promotion;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class PromotionDto {
     private LocalDate endDate;
 
     public static PromotionDto from (Promotion promotion) {
+        if(Objects.isNull(promotion)) return null;
         return PromotionDto.builder()
                 .id(promotion.getId())
                 .promotionName(promotion.getPromotionName())

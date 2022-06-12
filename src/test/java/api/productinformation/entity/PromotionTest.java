@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -43,8 +45,9 @@ class PromotionTest {
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
                         "2022,1,1", "2022,1,1");
-        Item item = Item.createItem("bb", "일반", 20000L,
-                "2022,1,1", "2022,1,1");
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2022,1,1));
         em.persist(promotion);
         em.persist(item);
         em.flush();
@@ -79,8 +82,9 @@ class PromotionTest {
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
                         "2022,1,1", "2022,1,1");
-        Item item = Item.createItem("bb", "일반", 20000L,
-                "2022,1,1", "2022,1,1");
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2022,1,1));
         em.persist(promotion);
         em.persist(item);
         em.flush();
@@ -106,8 +110,9 @@ class PromotionTest {
         Promotion promotion =
                 Promotion.createPromotion("promotion", 2000, null,
                         "2022,1,1", "2022,1,1");
-        Item item = Item.createItem("bb", "일반", 20000L,
-                "2022,1,1", "2022,1,1");
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
+                LocalDate.of(2022,1,1),
+                LocalDate.of(2022,1,1));
         em.persist(promotion);
         em.persist(item);
         em.flush();

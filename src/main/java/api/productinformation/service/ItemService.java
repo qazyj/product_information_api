@@ -6,27 +6,35 @@ import api.productinformation.dto.item.NewItem;
 import api.productinformation.entity.Item;
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.ItemType;
+import api.productinformation.entity.Promotion;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidParameterException;
 import api.productinformation.exception.handler.InvalidStartdateAfterEnddateException;
 import api.productinformation.exception.handler.NotFoundResourceException;
+import api.productinformation.repository.ItemPromotionRepository;
 import api.productinformation.repository.ItemRepository;
+import api.productinformation.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
+    private final PromotionRepository promotionRepository;
+    private final ItemPromotionRepository itemPromotionRepository;
 
     public ResponseEntity<Object> saveItem(NewItem newItem){
 
@@ -47,6 +55,15 @@ public class ItemService {
 
         Item savedItem = itemRepository.save(Item.createItem(newItem.getItemName(), newItem.getRealItemType(), newItem.getItemPrice(),
                 newItem.getStartDateLocalType(), newItem.getEndDateLocalType()));
+
+        List<Promotion> itemConnectablePromotion =
+                promotionRepository.findItemConnectablePromotion(savedItem.getStartDate(), savedItem.getEndDate());
+
+
+        // 아이템과 프로모션 중 기간이 겹치면 매핑
+        for(Promotion promotion : itemConnectablePromotion) {
+            itemPromotionRepository.save(ItemPromotion.createItemPromotion(savedItem, promotion));
+        }
 
         return new ResponseEntity<>(ItemDto.from(savedItem), HttpStatus.OK);
     }
@@ -93,20 +110,16 @@ public class ItemService {
      * 단, 없을 경우 null 리턴
      */
     private ItemPromotionDto getItemPromotionDto(Item findItem) {
+        LocalDate now = LocalDate.now();
 
         for(ItemPromotion itemPromotion : findItem.getItemPromotions()){
             if(itemPromotion.getSalePrice() <= 0L) continue;
 
-            if((findItem.getStartDate().compareTo(itemPromotion.getStartDate()) >= 0
-                    && findItem.getStartDate().compareTo(itemPromotion.getEndDate()) < 0) ||
-                    (findItem.getEndDate().compareTo(itemPromotion.getStartDate()) >= 0
-                            && findItem.getEndDate().compareTo(itemPromotion.getEndDate()) < 0) ||
-                    (itemPromotion.getStartDate().compareTo(findItem.getStartDate()) >= 0
-                            && itemPromotion.getStartDate().compareTo(findItem.getEndDate()) < 0) ||
-                    (itemPromotion.getEndDate().compareTo(findItem.getStartDate()) >= 0
-                            && itemPromotion.getEndDate().compareTo(findItem.getEndDate()) < 0)) {
+            // 프로모션 기간이 현재와 겹치면 Return
+            if(now.compareTo(itemPromotion.getStartDate()) >= 0 &&
+             now.compareTo(itemPromotion.getEndDate()) <= 0)
                 return ItemPromotionDto.from(findItem, itemPromotion.getPromotion());
-            }
+
         }
 
         // 없는 경우 프로모션 없으면 예외
