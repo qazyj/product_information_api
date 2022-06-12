@@ -1,8 +1,7 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.Promotion;
-import api.productinformation.dto.promotion.NewPromotion;
-import api.productinformation.dto.promotion.PromotionDto;
+import api.productinformation.dto.promotion.*;
 import api.productinformation.repository.PromotionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

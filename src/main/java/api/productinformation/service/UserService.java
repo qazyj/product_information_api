@@ -1,10 +1,10 @@
 package api.productinformation.service;
 
+import api.productinformation.dto.user.NewUser;
+import api.productinformation.dto.user.UserDto;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.UserState;
 import api.productinformation.entity.User;
-import api.productinformation.dto.user.NewUser;
-import api.productinformation.dto.user.UserDto;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.errorcode.UserErrorCode;
 import api.productinformation.exception.handler.ExitUserException;
@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static api.productinformation.dto.user.UserDto.*;
 
 @Service
 @Transactional

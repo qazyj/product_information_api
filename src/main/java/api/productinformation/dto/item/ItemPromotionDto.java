@@ -3,7 +3,7 @@ package api.productinformation.dto.item;
 import api.productinformation.entity.Item;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.Promotion;
-import api.productinformation.dto.promotion.PromotionDto;
+import api.productinformation.dto.promotion.*;
 import lombok.*;
 
 import java.time.LocalDate;
