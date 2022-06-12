@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class ItemServiceTest {
     @Autowired
     EntityManager em;
@@ -34,7 +33,7 @@ class ItemServiceTest {
         ItemAdd itemAdd = new ItemAdd("bb", "일반", 20000L,
                 "2022.01.01",
                 "2023.01.01");
-        ItemDto itemDto = itemService.saveItem(itemAdd);
+        ItemDto itemDto = (ItemDto) itemService.saveItem(itemAdd).getBody();
 
         //when
         Item findItem = itemRepository.findById(itemDto.getId()).get();
@@ -57,7 +56,7 @@ class ItemServiceTest {
         ItemAdd itemAdd = new ItemAdd("bb", "일반", 20000L,
                 "2022.1.1",
                 "2023.1.1");
-        ItemDto itemDto = itemService.saveItem(itemAdd);
+        ItemDto itemDto = (ItemDto) itemService.saveItem(itemAdd).getBody();
         itemRepository.findById(itemDto.getId()).get();
         itemService.deleteItem(itemDto.getId());
 
@@ -73,20 +72,20 @@ class ItemServiceTest {
         //given
 
         //when
-        Optional<ItemPromotionDto> itemPromotionDto = itemService.findItemPromotionById(1L);
+        ItemPromotionDto itemPromotionDto = (ItemPromotionDto) itemService.findItemPromotionById(1L).getBody();
 
         //then
-        assertThat(itemPromotionDto.get().getSalePrice()).isEqualTo(19000L);
+        assertThat(itemPromotionDto.getSalePrice()).isEqualTo(19000L);
     }
 
     @Test
-    public void 아이템_프로모션_api_saleprice가_0인_경우_null_반환() throws Exception {
+    public void 아이템_프로모션_api_프로모션이_없는_경우_ItemPrice_같다_salePrice() throws Exception {
         //given
 
         //when
-        Optional<ItemPromotionDto> itemPromotionDto = itemService.findItemPromotionById(2L);
+        ItemPromotionDto itemPromotionDto = (ItemPromotionDto) itemService.findItemPromotionById(2L).getBody();
 
         //then
-        assertThat(itemPromotionDto).isEqualTo(Optional.empty());
+        assertThat(itemPromotionDto.getItemPrice()).isEqualTo(itemPromotionDto.getSalePrice());
     }
 }
