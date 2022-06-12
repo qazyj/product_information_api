@@ -1,8 +1,8 @@
 package api.productinformation.service;
 
+import api.productinformation.dto.promotion.PromotionDto;
 import api.productinformation.entity.Promotion;
 import api.productinformation.dto.promotion.NewPromotion;
-import api.productinformation.dto.promotion.PromotionDto;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidParameterException;

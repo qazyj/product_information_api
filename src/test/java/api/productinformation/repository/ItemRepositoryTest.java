@@ -3,7 +3,6 @@ package api.productinformation.repository;
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
 import api.productinformation.entity.Item;
-import api.productinformation.dto.item.ItemDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

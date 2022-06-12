@@ -2,7 +2,7 @@ package api.productinformation.repository;
 
 import api.productinformation.entity.Type;
 import api.productinformation.entity.Item;
-import api.productinformation.dto.item.ItemDto;
+import api.productinformation.dto.item.*;
 
 import java.util.List;
 import java.util.Optional;

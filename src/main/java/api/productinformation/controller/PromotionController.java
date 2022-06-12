@@ -1,8 +1,8 @@
 package api.productinformation.controller;
 
 import api.productinformation.dto.RequestDto;
-import api.productinformation.dto.promotion.NewPromotion;
 import api.productinformation.service.PromotionService;
+import api.productinformation.dto.promotion.NewPromotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
