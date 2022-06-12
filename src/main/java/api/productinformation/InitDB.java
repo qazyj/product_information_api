@@ -24,6 +24,11 @@ import java.time.LocalDate;
 public class InitDB {
     private final InitDBService initDBService;
 
+    @PostConstruct
+    public void init() {
+        initDBService.init();
+    }
+
     @Component
     static class InitDBService {
         @PersistenceContext
