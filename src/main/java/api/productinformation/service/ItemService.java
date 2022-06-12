@@ -5,6 +5,7 @@ import api.productinformation.dto.item.ItemPromotionDto;
 import api.productinformation.dto.item.NewItem;
 import api.productinformation.entity.Item;
 import api.productinformation.entity.ItemPromotion;
+import api.productinformation.entity.ItemType;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidParameterException;
@@ -28,6 +29,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     public ResponseEntity<Object> saveItem(NewItem newItem){
+
         checkArgsIsNull(newItem);
 
         try {
@@ -36,11 +38,14 @@ public class ItemService {
             throw new InvalidDateTimeFormatException(CommonErrorCode.INVALID_DATETIME_FORMAT);
         }
 
+        // enum에 없으면 예외
+        newItem.StringToItemType();
+
         if(newItem.getStartDateLocalType().isAfter(newItem.getEndDateLocalType())){
             throw new InvalidStartdateAfterEnddateException(CommonErrorCode.INVALID_STARTDATE_AFTER_ENDDATE);
         }
 
-        Item savedItem = itemRepository.save(Item.createItem(newItem.getItemName(), newItem.getItemType(), newItem.getItemPrice(),
+        Item savedItem = itemRepository.save(Item.createItem(newItem.getItemName(), newItem.getRealItemType(), newItem.getItemPrice(),
                 newItem.getStartDateLocalType(), newItem.getEndDateLocalType()));
 
         return new ResponseEntity<>(ItemDto.from(savedItem), HttpStatus.OK);

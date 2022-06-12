@@ -1,7 +1,7 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.Item;
-import api.productinformation.entity.Type;
+import api.productinformation.entity.UserType;
 import api.productinformation.dto.item.*;
 import api.productinformation.repository.ItemRepository;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class ItemServiceTest {
         //then
         assertThat(itemDto.getId()).isEqualTo(findItem.getId());
         assertThat(itemDto.getItemName()).isEqualTo(findItem.getItemName());
-        if(findItem.getItemType().equals(Type.NORMAL))
+        if(findItem.getItemType().equals(UserType.NORMAL))
             assertThat(itemDto.getItemType()).isEqualTo("일반");
         else
             assertThat(itemDto.getItemType()).isEqualTo("기업회원상품");

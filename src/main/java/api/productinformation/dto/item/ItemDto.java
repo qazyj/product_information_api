@@ -1,9 +1,12 @@
 package api.productinformation.dto.item;
 
 import api.productinformation.entity.Item;
-import api.productinformation.entity.Type;
+import api.productinformation.entity.ItemType;
+import api.productinformation.entity.UserType;
 import lombok.*;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Getter
@@ -13,28 +16,19 @@ import java.time.LocalDate;
 public class ItemDto {
     private Long id;
     private String itemName;
-    private Type itemType;
+    private String itemType;
     private Long itemPrice;
     private LocalDate startDate;
     private LocalDate endDate;
-
-    public String getItemType() {
-        if(itemType.equals(Type.NORMAL)) {
-            return "일반";
-        }
-
-        return "기업회원상품";
-    }
 
     public static ItemDto from (Item item) {
         return ItemDto.builder()
                 .id(item.getId())
                 .itemName(item.getItemName())
-                .itemType(item.getItemType())
+                .itemType(item.getItemType().getValue())
                 .itemPrice(item.getItemPrice())
                 .startDate(item.getStartDate())
                 .endDate(item.getEndDate())
                 .build();
     }
-
 }

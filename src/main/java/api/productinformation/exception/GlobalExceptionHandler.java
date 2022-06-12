@@ -11,6 +11,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(InvalidItemTypeException.class)
+    public ResponseEntity<Object> handleInvalidItemTypeException(InvalidItemTypeException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        return handleExceptionInternal(errorCode);
+    }
+
+    @ExceptionHandler(InvalidUserStateException.class)
+    public ResponseEntity<Object> handleInvalidUserStateException(InvalidUserStateException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        return handleExceptionInternal(errorCode);
+    }
+
+    @ExceptionHandler(InvalidUserTypeException.class)
+    public ResponseEntity<Object> handleInvalidUserTypeException(InvalidUserTypeException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        return handleExceptionInternal(errorCode);
+    }
+
     @ExceptionHandler(NotFoundResourceException.class)
     public ResponseEntity<Object> handleNotFoundResourceException(NotFoundResourceException e) {
         ErrorCode errorCode = e.getErrorCode();

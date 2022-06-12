@@ -1,6 +1,6 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.Type;
+import api.productinformation.entity.UserType;
 import api.productinformation.entity.UserState;
 import api.productinformation.entity.User;
 import api.productinformation.dto.user.*;
@@ -34,7 +34,7 @@ class UserServiceTest {
         //then
         assertThat(userDto.getUserId()).isEqualTo(findUser.getId());
         assertThat(newUser.getUsername()).isEqualTo(findUser.getUsername());
-        if(findUser.getUserType().equals(Type.NORMAL))
+        if(findUser.getUserType().equals(UserType.NORMAL))
             assertThat(userDto.getUserType()).isEqualTo("일반");
         else
             assertThat(userDto.getUserType()).isEqualTo("기업회원");
