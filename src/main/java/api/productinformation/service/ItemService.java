@@ -5,7 +5,6 @@ import api.productinformation.dto.item.ItemPromotionDto;
 import api.productinformation.dto.item.NewItem;
 import api.productinformation.entity.Item;
 import api.productinformation.entity.ItemPromotion;
-import api.productinformation.entity.ItemType;
 import api.productinformation.entity.Promotion;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.handler.InvalidDateTimeFormatException;
@@ -22,11 +21,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -69,7 +68,7 @@ public class ItemService {
     }
 
     public ResponseEntity<Object> deleteItem(Long id){
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
 
         Item item = itemRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -80,7 +79,7 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> findItemPromotionById(Long id) {
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
 
         // 많은 연관관계를 한번에 fetch join 하기 전 item이 있는 지 먼저 확인
         Item item = itemRepository.findById(id).orElseThrow(
@@ -96,11 +95,11 @@ public class ItemService {
     }
 
     private void checkArgsIsNull(NewItem newItem) {
-        if(newItem.getItemName() == null ||
-                newItem.getItemPrice() == null ||
-                newItem.getItemType() == null ||
-                newItem.getStartDate() == null ||
-                newItem.getEndDate() == null){
+        if(Objects.isNull(newItem.getItemName()) ||
+                Objects.isNull(newItem.getItemPrice()) ||
+                Objects.isNull(newItem.getItemType()) ||
+                Objects.isNull(newItem.getStartDate()) ||
+                Objects.isNull(newItem.getEndDate())){
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }
