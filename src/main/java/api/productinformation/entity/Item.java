@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class Item extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,33 +25,16 @@ public class Item extends DateEntity {
     private String itemName;
 
     @Enumerated(EnumType.STRING)
-    private Type itemType;
+    private ItemType itemType;
 
     private Long itemPrice;
 
     //==생성 메서드==//
-    public static Item createItem(String itemName, String itemType, Long itemPrice,
-                                  String startDate, String endDate){
-        Item item = new Item();
-        item.itemName = itemName;
-        if(itemType.equals("일반"))
-            item.itemType = Type.NORMAL;
-        else
-            item.itemType = Type.CORPORATE;
-        item.itemPrice = itemPrice;
-        item.setStartDate(startDate);
-        item.setEndDate(endDate);
-        return item;
-    }
-
-    public static Item createItem(String itemName, String itemType, Long itemPrice,
+    public static Item createItem(String itemName, ItemType itemType, Long itemPrice,
                                   LocalDate startDate, LocalDate endDate){
         Item item = new Item();
         item.itemName = itemName;
-        if(itemType.equals("일반"))
-            item.itemType = Type.NORMAL;
-        else
-            item.itemType = Type.CORPORATE;
+        item.itemType = itemType;
         item.itemPrice = itemPrice;
         item.setStartDate(startDate);
         item.setEndDate(endDate);

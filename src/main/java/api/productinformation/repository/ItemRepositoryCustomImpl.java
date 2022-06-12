@@ -1,6 +1,6 @@
 package api.productinformation.repository;
 
-import api.productinformation.entity.Type;
+import api.productinformation.entity.UserType;
 import api.productinformation.entity.Item;
 import api.productinformation.dto.item.*;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     @Override
-    public List<ItemDto> findCanBuyItemListByType(Type type) {
+    public List<ItemDto> findCanBuyItemListByType(UserType type) {
         LocalDate now = LocalDate.now();
         return em.createQuery("select new api.productinformation.entity.item.ItemDto(i.id, i.itemName, i.itemType, i.itemPrice, i.startDate, i.endDate)" +
                         " from Item i" +

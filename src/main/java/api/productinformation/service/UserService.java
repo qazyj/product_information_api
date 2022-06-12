@@ -2,7 +2,7 @@ package api.productinformation.service;
 
 import api.productinformation.dto.user.NewUser;
 import api.productinformation.dto.user.UserDto;
-import api.productinformation.entity.Type;
+import api.productinformation.entity.UserType;
 import api.productinformation.entity.UserState;
 import api.productinformation.entity.User;
 import api.productinformation.exception.errorcode.CommonErrorCode;
@@ -18,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static api.productinformation.dto.user.UserDto.*;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,9 +27,11 @@ public class UserService {
 
     public ResponseEntity<Object> saveUser(NewUser newUser){
         checkArgsIsNull(newUser);
+        newUser.StringToUserState();
+        newUser.StringToUserType();
 
         User savedUser = userRepository.save(User.createUser(newUser.getUserName(),
-                newUser.getUserType(), newUser.getUserState()));
+                newUser.getRealUserType(), newUser.getRealUserState()));
 
         return new ResponseEntity<>(UserDto.from(savedUser), HttpStatus.OK);
     }
@@ -53,12 +53,11 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
 
-        if (user.getUserState() == UserState.UNUSE) {
-            throw new ExitUserException(UserErrorCode.EXIT_USER);
-        }
+        // 탈퇴 예외처리
+        user.withdraw();
 
-        if(user.getUserType().equals(Type.NORMAL))
-            return new ResponseEntity<>(itemRepository.findCanBuyItemListByType(Type.NORMAL), HttpStatus.OK);
+        if(user.getUserType().equals(UserType.NORMAL))
+            return new ResponseEntity<>(itemRepository.findCanBuyItemListByType(UserType.NORMAL), HttpStatus.OK);
         else
             return new ResponseEntity<>(itemRepository.findCanBuyItemList(), HttpStatus.OK);
     }

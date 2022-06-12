@@ -1,7 +1,7 @@
 package api.productinformation.repository;
 
 import api.productinformation.entity.ItemPromotion;
-import api.productinformation.entity.Type;
+import api.productinformation.entity.UserType;
 import api.productinformation.entity.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ class ItemRepositoryTest {
         // initDB에서 추가한 기본 데이터
 
         //when
-        List<ItemDto> results = itemRepository.findCanBuyItemListByType(Type.NORMAL);
+        List<ItemDto> results = itemRepository.findCanBuyItemListByType(UserType.NORMAL);
 
         //then
         assertThat(results.size()).isEqualTo(2);
@@ -77,7 +77,7 @@ class ItemRepositoryTest {
         em.clear();
 
         //when
-        List<ItemDto> normalResults = itemRepository.findCanBuyItemListByType(Type.NORMAL);
+        List<ItemDto> normalResults = itemRepository.findCanBuyItemListByType(UserType.NORMAL);
         List<ItemDto> corporateResults = itemRepository.findCanBuyItemList();
 
         //then
@@ -96,7 +96,7 @@ class ItemRepositoryTest {
         em.clear();
 
         //when
-        List<ItemDto> results = itemRepository.findCanBuyItemListByType(Type.NORMAL);
+        List<ItemDto> results = itemRepository.findCanBuyItemListByType(UserType.NORMAL);
 
         //then
         assertThat(results.size()).isEqualTo(2);

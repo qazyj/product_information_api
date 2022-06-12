@@ -1,9 +1,13 @@
 package api.productinformation.dto.user;
 
-import api.productinformation.entity.Type;
+import api.productinformation.entity.ItemType;
+import api.productinformation.entity.UserType;
 import api.productinformation.entity.User;
 import api.productinformation.entity.UserState;
 import lombok.*;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Getter
 @NoArgsConstructor
@@ -12,31 +16,15 @@ import lombok.*;
 public class UserDto {
     private Long userId;
     private String userName;
-    private Type userType;
-    private UserState userState;
-
-    public String getUserType() {
-        if(userType.equals(Type.NORMAL)) {
-            return "일반";
-        }
-
-        return "기업회원";
-    }
-
-    public String getUserState() {
-        if(userState.equals(UserState.USE)) {
-            return "정상";
-        }
-
-        return "탈퇴";
-    }
+    private String userType;
+    private String userState;
 
     public static UserDto from(User user) {
         return UserDto.builder()
                 .userId(user.getId())
-                .userName(user.getUsername())
-                .userType(user.getUserType())
-                .userState(user.getUserState())
+                .userName(user.getUserName())
+                .userType(user.getUserType().getValue())
+                .userState(user.getUserState().getValue())
                 .build();
     }
 }

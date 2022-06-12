@@ -31,7 +31,7 @@ class ItemTest {
 
         //then
         assertThat(findItem.getItemName()).isEqualTo("bb");
-        assertThat(findItem.getItemType()).isEqualTo(Type.NORMAL);
+        assertThat(findItem.getItemType()).isEqualTo(UserType.NORMAL);
         assertThat(findItem.getItemPrice()).isEqualTo(20000L);
         assertThat(findItem.getStartDate()).isEqualTo(LocalDate.of(2022,1,1));
         assertThat(findItem.getEndDate()).isEqualTo(LocalDate.of(2023,1,1));

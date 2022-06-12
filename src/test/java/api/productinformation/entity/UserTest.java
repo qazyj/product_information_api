@@ -22,7 +22,7 @@ class UserTest {
         User user = User.createUser("aa", "일반", "정상");
 
         //then
-        assertThat(user.getUserType()).isEqualTo(Type.NORMAL);
+        assertThat(user.getUserType()).isEqualTo(UserType.NORMAL);
         assertThat(user.getUsername()).isEqualTo("aa");
         assertThat(user.getUserState()).isEqualTo(UserState.USE);
     }

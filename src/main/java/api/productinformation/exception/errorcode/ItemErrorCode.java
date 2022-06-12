@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ItemErrorCode implements ErrorCode {
-    ;
+
+    INVALID_ITEM_TYPE(400, HttpStatus.BAD_REQUEST,"itemType is available only to 일반 and 기업회원상품");
 
     private final int statusCode;
     private final HttpStatus httpStatus;
