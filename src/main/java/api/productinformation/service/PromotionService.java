@@ -1,10 +1,8 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.promotion.Promotion;
-import api.productinformation.entity.promotion.PromotionAdd;
-import api.productinformation.entity.promotion.PromotionDto;
-import api.productinformation.entity.user.UserAdd;
-import api.productinformation.entity.user.UserDto;
+import api.productinformation.entity.Promotion;
+import api.productinformation.dto.promotion.NewPromotion;
+import api.productinformation.dto.promotion.PromotionDto;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidParameterException;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeParseException;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,35 +23,35 @@ import java.util.Optional;
 public class PromotionService {
     private final PromotionRepository promotionRepository;
 
-    public ResponseEntity<Object> savePromotion(PromotionAdd promotionAdd){
-        checkArgsIsNull(promotionAdd);
+    public ResponseEntity<Object> savePromotion(NewPromotion newPromotion){
+        checkArgsIsNull(newPromotion);
 
         try {
-            promotionAdd.StringToLocalDate();
+            newPromotion.StringToLocalDate();
         }  catch (DateTimeParseException ex) {
             throw new InvalidDateTimeFormatException(CommonErrorCode.INVALID_DATETIME_FORMAT);
         }
-        promotionAdd.StringToLocalDate();
+        newPromotion.StringToLocalDate();
 
-        if(promotionAdd.getStartDateLocalType().isAfter(promotionAdd.getEndDateLocalType())){
+        if(newPromotion.getStartDateLocalType().isAfter(newPromotion.getEndDateLocalType())){
             throw new InvalidStartdateAfterEnddateException(CommonErrorCode.INVALID_STARTDATE_AFTER_ENDDATE);
         }
 
         Promotion savedPromotion = promotionRepository.save(Promotion.createPromotion(
-                promotionAdd.getPromotionName(),
-                promotionAdd.getDiscountAmount(),
-                promotionAdd.getDiscountRate(),
-                promotionAdd.getStartDateLocalType(),
-                promotionAdd.getEndDateLocalType()));
+                newPromotion.getPromotionName(),
+                newPromotion.getDiscountAmount(),
+                newPromotion.getDiscountRate(),
+                newPromotion.getStartDateLocalType(),
+                newPromotion.getEndDateLocalType()));
 
-        return new ResponseEntity<>(new PromotionDto(savedPromotion), HttpStatus.OK);
+        return new ResponseEntity<>(PromotionDto.from(savedPromotion), HttpStatus.OK);
     }
 
-    private void checkArgsIsNull(PromotionAdd promotionAdd) {
-        if(promotionAdd.getPromotionName() == null ||
-                promotionAdd.getEndDate() == null ||
-                promotionAdd.getStartDate() == null ||
-                (promotionAdd.getDiscountAmount() == null && promotionAdd.getDiscountRate() == null)) {
+    private void checkArgsIsNull(NewPromotion newPromotion) {
+        if(newPromotion.getPromotionName() == null ||
+                newPromotion.getEndDate() == null ||
+                newPromotion.getStartDate() == null ||
+                (newPromotion.getDiscountAmount() == null && newPromotion.getDiscountRate() == null)) {
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }

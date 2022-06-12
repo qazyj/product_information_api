@@ -1,7 +1,5 @@
 package api.productinformation.entity;
 
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.promotion.Promotion;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

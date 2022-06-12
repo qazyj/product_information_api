@@ -1,4 +1,4 @@
-package api.productinformation.entity;
+package api.productinformation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

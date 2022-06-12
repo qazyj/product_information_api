@@ -1,7 +1,5 @@
 package api.productinformation.entity;
 
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.promotion.Promotion;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -23,8 +20,7 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022,1,1", "2022,1,1");
         em.persist(promotion);
         em.flush();
         em.clear();
@@ -46,11 +42,9 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
-                        LocalDate.of(2022,1,1),
-                        LocalDate.of(2023,1,1));
+                        "2022,1,1", "2022,1,1");
         Item item = Item.createItem("bb", "일반", 20000L,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022,1,1", "2022,1,1");
         em.persist(promotion);
         em.persist(item);
         em.flush();
@@ -84,11 +78,9 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
-                        LocalDate.of(2022,1,1),
-                        LocalDate.of(2023,1,1));
+                        "2022,1,1", "2022,1,1");
         Item item = Item.createItem("bb", "일반", 20000L,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022,1,1", "2022,1,1");
         em.persist(promotion);
         em.persist(item);
         em.flush();
@@ -113,11 +105,9 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", 2000, null,
-                        LocalDate.of(2022,1,1),
-                        LocalDate.of(2023,1,1));
+                        "2022,1,1", "2022,1,1");
         Item item = Item.createItem("bb", "일반", 20000L,
-                LocalDate.of(2022,1,1),
-                LocalDate.of(2023,1,1));
+                "2022,1,1", "2022,1,1");
         em.persist(promotion);
         em.persist(item);
         em.flush();

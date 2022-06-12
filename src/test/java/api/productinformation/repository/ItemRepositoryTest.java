@@ -2,19 +2,17 @@ package api.productinformation.repository;
 
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.Type;
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.item.ItemDto;
+import api.productinformation.entity.Item;
+import api.productinformation.dto.item.ItemDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
