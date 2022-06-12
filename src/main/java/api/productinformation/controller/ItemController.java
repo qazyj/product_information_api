@@ -1,5 +1,6 @@
 package api.productinformation.controller;
 
+import api.productinformation.entity.RequestDto;
 import api.productinformation.entity.item.ItemAdd;
 import api.productinformation.entity.item.ItemDto;
 import api.productinformation.entity.item.ItemPromotionDto;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -17,17 +19,17 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping("")
-    public ResponseEntity<Object> saveItem(ItemDto itemDto){
-        return itemService.saveItem(itemDto);
+    public ResponseEntity<Object> saveItem(@RequestBody ItemAdd itemAdd){
+        return itemService.saveItem(itemAdd);
     }
 
-    @DeleteMapping("/{item_id}")
-    public ResponseEntity<Object> deleteItem(@PathVariable("item_id") Long id){
-        return itemService.deleteItem(id);
+    @DeleteMapping("")
+    public ResponseEntity<Object> deleteItem(@RequestBody RequestDto requestDto){
+        return itemService.deleteItem(requestDto.getId());
     }
 
-    @GetMapping("/promotion/{item_id}")
-    public ResponseEntity<Object> findItemPromotionById(@PathVariable("item_id") Long id) {
-        return itemService.findItemPromotionById(id);
+    @GetMapping("/promotion")
+    public ResponseEntity<Object> findItemPromotionById(@RequestBody RequestDto requestDto) {
+        return itemService.findItemPromotionById(requestDto.getId());
     }
 }

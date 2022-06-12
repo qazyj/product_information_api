@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class PromotionServiceTest {
     @Autowired
     EntityManager em;
@@ -33,7 +32,7 @@ class PromotionServiceTest {
         PromotionAdd promotionAdd = new PromotionAdd("promotion", null, 0.05,
                 "2022.01.01",
                 "2023.01.01");
-        PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
+        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(promotionAdd).getBody();
 
         //when
         Promotion findPromotion = promotionRepository.findById(promotionDto.getId()).get();
@@ -52,7 +51,7 @@ class PromotionServiceTest {
         PromotionAdd promotionAdd = new PromotionAdd("promotion", 1000, null,
                 "2022.01.01",
                 "2023.01.01");
-        PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
+        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(promotionAdd).getBody();
 
         //when
         Promotion findPromotion = promotionRepository.findById(promotionDto.getId()).get();
@@ -72,7 +71,7 @@ class PromotionServiceTest {
         PromotionAdd promotionAdd = new PromotionAdd("promotion", null, 0.05,
                 "2022.01.01",
                 "2023.01.01");
-        PromotionDto promotionDto = promotionService.savePromotion(promotionAdd);
+        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(promotionAdd).getBody();
 
         promotionRepository.findById(promotionDto.getId()).get();
         promotionService.deletePromotion(promotionDto.getId());

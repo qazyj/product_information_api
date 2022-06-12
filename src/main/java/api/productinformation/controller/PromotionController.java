@@ -1,5 +1,6 @@
 package api.productinformation.controller;
 
+import api.productinformation.entity.RequestDto;
 import api.productinformation.entity.promotion.PromotionAdd;
 import api.productinformation.entity.promotion.PromotionDto;
 import api.productinformation.service.PromotionService;
@@ -14,12 +15,12 @@ public class PromotionController {
     private final PromotionService promotionService;
 
     @PostMapping("")
-    public ResponseEntity<Object> savePromotion(PromotionAdd promotionAdd){
+    public ResponseEntity<Object> savePromotion(@RequestBody PromotionAdd promotionAdd){
         return promotionService.savePromotion(promotionAdd);
     }
 
-    @DeleteMapping("/{promotion_id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable("promotion_id") Long id){
-        return promotionService.deletePromotion(id);
+    @DeleteMapping("")
+    public ResponseEntity<Object> deleteUser(@RequestBody RequestDto requestDto){
+        return promotionService.deletePromotion(requestDto.getId());
     }
 }

@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class UserServiceTest {
     @Autowired EntityManager em;
     @Autowired UserService userService;
@@ -30,7 +29,7 @@ class UserServiceTest {
     public void 유저_등록() throws Exception {
         //given
         UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
-        ResponseEntity<Object> userDto = userService.saveUser(userAdd);
+        UserDto userDto = (UserDto) userService.saveUser(userAdd).getBody();
 
         //when
         User findUser = userRepository.findById(userDto.getUserId()).get();
@@ -53,7 +52,7 @@ class UserServiceTest {
         //given
         // InitDB 클래스에서 저장한 userItem
         UserAdd userAdd = new UserAdd("kyj", "일반", "탈퇴");
-        UserDto userDto = userService.saveUser(userAdd);
+        UserDto userDto = (UserDto) userService.saveUser(userAdd).getBody();
         userService.deleteUser(userDto.getUserId());
 
         //when

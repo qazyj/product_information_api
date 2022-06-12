@@ -21,7 +21,7 @@ public class Promotion extends DateEntity {
     @Column(name = "promotion_id")
     private Long id;
 
-    @OneToMany(mappedBy = "promotion")
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)
     private List<ItemPromotion> itemPromotions = new ArrayList<>();
 
     private String promotionName;
