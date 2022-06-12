@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class ItemPromotionDto {
     private Long itemId;
     private String itemName;
-    private ItemType itemType;
+    private String itemType;
     private Long itemPrice;
     private Long salePrice;
     private LocalDate itemStartDate;
@@ -27,7 +27,7 @@ public class ItemPromotionDto {
         return ItemPromotionDto.builder()
                 .itemId(item.getId())
                 .itemName(item.getItemName())
-                .itemType(item.getItemType())
+                .itemType(item.getItemType().getValue())
                 .itemPrice(item.getItemPrice())
                 .itemStartDate(item.getStartDate())
                 .itemEndDate(item.getEndDate())

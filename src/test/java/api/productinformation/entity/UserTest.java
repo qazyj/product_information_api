@@ -19,18 +19,18 @@ class UserTest {
         //given
 
         //when
-        User user = User.createUser("aa", "일반", "정상");
+        User user = User.createUser("aa", UserType.NORMAL, UserState.USE);
 
         //then
         assertThat(user.getUserType()).isEqualTo(UserType.NORMAL);
-        assertThat(user.getUsername()).isEqualTo("aa");
+        assertThat(user.getUserName()).isEqualTo("aa");
         assertThat(user.getUserState()).isEqualTo(UserState.USE);
     }
 
     @Test
     public void 유저_탈퇴() throws Exception {
         //given
-        User user = User.createUser("aa", "일반", "정상");
+        User user = User.createUser("aa", UserType.NORMAL, UserState.USE);
         em.persist(user);
         user.withdraw();
         em.flush();

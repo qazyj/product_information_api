@@ -19,7 +19,7 @@ class ItemTest {
     @Test
     public void 아이템_엔티티_등록() throws Exception {
         //given
-        Item item = Item.createItem("bb", "일반", 20000L,
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2023,1,1));
         em.persist(item);

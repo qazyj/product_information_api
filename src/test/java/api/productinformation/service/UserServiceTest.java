@@ -33,7 +33,7 @@ class UserServiceTest {
 
         //then
         assertThat(userDto.getUserId()).isEqualTo(findUser.getId());
-        assertThat(newUser.getUsername()).isEqualTo(findUser.getUsername());
+        assertThat(newUser.getUserName()).isEqualTo(findUser.getUserName());
         if(findUser.getUserType().equals(UserType.NORMAL))
             assertThat(userDto.getUserType()).isEqualTo("일반");
         else
