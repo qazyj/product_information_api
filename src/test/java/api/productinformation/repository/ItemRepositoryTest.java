@@ -79,7 +79,7 @@ class ItemRepositoryTest {
         //given
         // initDB에서 추가한 기본 데이터
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, ItemType.NORMAL, 1000L,
+            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L,
                     LocalDate.of(2022,1,1),
                     LocalDate.of(2022,12,24));
             itemRepository.save(item);

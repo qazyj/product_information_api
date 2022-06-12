@@ -22,7 +22,7 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
-                "2022,1,1", "2022,1,1");
+                "2022.1.1", "2022.1.1");
         em.persist(promotion);
         em.flush();
         em.clear();
@@ -44,7 +44,7 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
-                        "2022,1,1", "2022,1,1");
+                        "2022.1.1", "2022.1.1");
         Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2022,1,1));
@@ -81,7 +81,7 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
-                        "2022,1,1", "2022,1,1");
+                        "2022.1.1", "2022.1.1");
         Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2022,1,1));
@@ -109,7 +109,7 @@ class PromotionTest {
         //given
         Promotion promotion =
                 Promotion.createPromotion("promotion", 2000, null,
-                        "2022,1,1", "2022,1,1");
+                        "2022.1.1", "2022.1.1");
         Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2022,1,1));

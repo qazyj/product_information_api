@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -44,7 +45,7 @@ public class UserService {
     }
 
     public ResponseEntity<Object> deleteUser(Long id){
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -55,7 +56,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> canBuyItemList(Long id) {
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -76,9 +77,9 @@ public class UserService {
     }
 
     private void checkArgsIsNull(NewUser newUser) {
-        if(newUser.getUserState() == null ||
-                newUser.getUserType() == null ||
-                newUser.getUserName() == null) {
+        if(Objects.isNull(newUser.getUserState()) ||
+                Objects.isNull(newUser.getUserType()) ||
+                        Objects.isNull(newUser.getUserName())){
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }

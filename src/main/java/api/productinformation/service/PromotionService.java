@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -63,16 +64,16 @@ public class PromotionService {
     }
 
     private void checkArgsIsNull(NewPromotion newPromotion) {
-        if(newPromotion.getPromotionName() == null ||
-                newPromotion.getEndDate() == null ||
-                newPromotion.getStartDate() == null ||
-                (newPromotion.getDiscountAmount() == null && newPromotion.getDiscountRate() == null)) {
+        if(Objects.isNull(newPromotion.getPromotionName()) ||
+                Objects.isNull(newPromotion.getEndDate()) ||
+                        Objects.isNull(newPromotion.getStartDate()) ||
+                (Objects.isNull(newPromotion.getDiscountAmount()) && Objects.isNull(newPromotion.getDiscountRate()))) {
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }
 
     public ResponseEntity<Object> deletePromotion(Long id){
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
 
         Promotion promotion = promotionRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));

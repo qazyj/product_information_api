@@ -39,10 +39,7 @@ class ItemServiceTest {
         //then
         assertThat(itemDto.getId()).isEqualTo(findItem.getId());
         assertThat(itemDto.getItemName()).isEqualTo(findItem.getItemName());
-        if(findItem.getItemType().equals(UserType.NORMAL))
-            assertThat(itemDto.getItemType()).isEqualTo("일반");
-        else
-            assertThat(itemDto.getItemType()).isEqualTo("기업회원상품");
+        assertThat(itemDto.getItemType()).isEqualTo("일반");
         assertThat(itemDto.getItemPrice()).isEqualTo(findItem.getItemPrice());
         assertThat(itemDto.getStartDate()).isEqualTo(findItem.getStartDate());
         assertThat(itemDto.getEndDate()).isEqualTo(findItem.getEndDate());
