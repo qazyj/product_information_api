@@ -35,9 +35,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(errorCode);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleInvalidParameter(IllegalArgumentException e) {
-        ErrorCode errorCode = CommonErrorCode.INVALID_PARAMETER;
+    @ExceptionHandler(InvalidParameterException.class)
+    public ResponseEntity<Object> handleInvalidParameter(InvalidParameterException e) {
+        ErrorCode errorCode = e.getErrorCode();
         return handleExceptionInternal(errorCode);
     }
 

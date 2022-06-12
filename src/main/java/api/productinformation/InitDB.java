@@ -1,9 +1,12 @@
-package api.productinformation.controller;
+package api.productinformation;
 
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.item.Item;
 import api.productinformation.entity.promotion.Promotion;
 import api.productinformation.entity.user.User;
+import api.productinformation.repository.ItemRepository;
+import api.productinformation.repository.PromotionRepository;
+import api.productinformation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +23,6 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class InitDB {
     private final InitDBService initDBService;
-
-    @PostConstruct
-    public void init() {
-        initDBService.init();
-    }
 
     @Component
     static class InitDBService {

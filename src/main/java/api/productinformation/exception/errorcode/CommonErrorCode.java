@@ -12,7 +12,7 @@ public enum CommonErrorCode implements ErrorCode{
 
     NOT_FOUND_RESOURCE(404, HttpStatus.NOT_FOUND, "Resource Not Exist"),
 
-    INVALID_PARAMETER(400,HttpStatus.BAD_REQUEST, "Invalid parameter included"),
+    INVALID_PARAMETER(400,HttpStatus.BAD_REQUEST, "Invalid parameter"),
 
     INVALID_DATETIME_FORMAT(400,HttpStatus.BAD_REQUEST, "Check Date Format (yyyy.M.d)"),
 
