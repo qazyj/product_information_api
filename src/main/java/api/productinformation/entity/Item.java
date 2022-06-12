@@ -1,6 +1,7 @@
 package api.productinformation.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Item extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
