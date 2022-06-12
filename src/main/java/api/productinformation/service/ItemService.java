@@ -1,7 +1,8 @@
 package api.productinformation.service;
 
+import api.productinformation.entity.Item;
 import api.productinformation.entity.ItemPromotion;
-import api.productinformation.entity.item.*;
+import api.productinformation.dto.item.*;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidParameterException;
@@ -24,22 +25,23 @@ import java.util.Comparator;
 public class ItemService {
     private final ItemRepository itemRepository;
 
-    public ResponseEntity<Object> saveItem(ItemAdd itemAdd){
-        checkArgsIsNull(itemAdd);
+    public ResponseEntity<Object> saveItem(NewItem newItem){
+        checkArgsIsNull(newItem);
 
         try {
-            itemAdd.StringToLocalDate();
+            newItem.StringToLocalDate();
         }  catch (DateTimeParseException ex) {
             throw new InvalidDateTimeFormatException(CommonErrorCode.INVALID_DATETIME_FORMAT);
         }
 
-        if(itemAdd.getStartDateLocalType().isAfter(itemAdd.getEndDateLocalType())){
+        if(newItem.getStartDateLocalType().isAfter(newItem.getEndDateLocalType())){
             throw new InvalidStartdateAfterEnddateException(CommonErrorCode.INVALID_STARTDATE_AFTER_ENDDATE);
         }
 
-        Item savedItem = itemRepository.save(Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
-                itemAdd.getStartDateLocalType(), itemAdd.getEndDateLocalType()));
-        return new ResponseEntity<>(new ItemDto(savedItem), HttpStatus.OK);
+        Item savedItem = itemRepository.save(Item.createItem(newItem.getItemName(), newItem.getItemType(), newItem.getItemPrice(),
+                newItem.getStartDateLocalType(), newItem.getEndDateLocalType()));
+
+        return new ResponseEntity<>(ItemDto.from(savedItem), HttpStatus.OK);
     }
 
     public ResponseEntity<Object> deleteItem(Long id){
@@ -69,12 +71,12 @@ public class ItemService {
         return new ResponseEntity<>(itemPromotionDto, HttpStatus.OK);
     }
 
-    private void checkArgsIsNull(ItemAdd itemAdd) {
-        if(itemAdd.getItemName() == null ||
-                itemAdd.getItemPrice() == null ||
-                itemAdd.getItemType() == null ||
-                itemAdd.getStartDate() == null ||
-                itemAdd.getEndDate() == null){
+    private void checkArgsIsNull(NewItem newItem) {
+        if(newItem.getItemName() == null ||
+                newItem.getItemPrice() == null ||
+                newItem.getItemType() == null ||
+                newItem.getStartDate() == null ||
+                newItem.getEndDate() == null){
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }
@@ -96,11 +98,12 @@ public class ItemService {
                             && itemPromotion.getStartDate().compareTo(findItem.getEndDate()) < 0) ||
                     (itemPromotion.getEndDate().compareTo(findItem.getStartDate()) >= 0
                             && itemPromotion.getEndDate().compareTo(findItem.getEndDate()) < 0)) {
-                return new ItemPromotionDto(findItem, itemPromotion.getPromotion());
+                return ItemPromotionDto.from(findItem, itemPromotion.getPromotion());
             }
         }
+
         // 없는 경우 프로모션 없으면 예외
-        return new ItemPromotionDto(findItem, null);
+        return ItemPromotionDto.from(findItem, null);
     }
 
     private void sortSalePrice(Item findItem) {

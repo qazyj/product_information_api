@@ -1,15 +1,11 @@
-package api.productinformation.entity.promotion;
+package api.productinformation.entity;
 
-import api.productinformation.entity.DateEntity;
-import api.productinformation.entity.ItemPromotion;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Entity
@@ -39,8 +35,8 @@ public class Promotion extends DateEntity {
             promotion.discountRate = discountRate;
         else
             promotion.discountAmount = discountAmount;
-        promotion.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
-        promotion.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
+        promotion.setStartDate(startDate);
+        promotion.setEndDate(endDate);
         return promotion;
     }
 

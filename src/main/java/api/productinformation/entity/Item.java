@@ -1,15 +1,11 @@
-package api.productinformation.entity.item;
+package api.productinformation.entity;
 
-import api.productinformation.entity.DateEntity;
-import api.productinformation.entity.ItemPromotion;
-import api.productinformation.entity.Type;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +38,8 @@ public class Item extends DateEntity {
         else
             item.itemType = Type.CORPORATE;
         item.itemPrice = itemPrice;
-        item.setStartDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
-        item.setEndDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy.M.d")));
+        item.setStartDate(startDate);
+        item.setEndDate(endDate);
         return item;
     }
 

@@ -1,10 +1,7 @@
-package api.productinformation.entity.item;
+package api.productinformation.dto.promotion;
 
-import api.productinformation.entity.Type;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -12,25 +9,24 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 @NoArgsConstructor
-public class ItemAdd {
-    private String itemName;
-    private String itemType;
-    private Long itemPrice;
+public class NewPromotion {
+    private String promotionName;
+    private Integer discountAmount;
+    private Double discountRate;
     private String startDate;
     private String endDate;
-
 
     @DateTimeFormat(pattern = "yyyy.M.d")
     private LocalDate startDateLocalType;
     @DateTimeFormat(pattern = "yyyy.M.d")
     private LocalDate endDateLocalType;
 
-    public ItemAdd(String itemName, String itemType, Long itemPrice, String startDate, String endDate) {
-        this.itemName = itemName;
-        this.itemType = itemType;
-        this.itemPrice = itemPrice;
+    public NewPromotion(String promotionName, Integer discountAmount, Double discountRate, String startDate, String endDate) {
+        this.promotionName = promotionName;
+        this.discountAmount = discountAmount;
+        this.discountRate = discountRate;
         this.startDate = startDate;
-        this.endDate = startDate;
+        this.endDate = endDate;
     }
 
     public void StringToLocalDate() {

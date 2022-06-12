@@ -1,16 +1,11 @@
 package api.productinformation.controller;
 
-import api.productinformation.entity.RequestDto;
-import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.user.UserAdd;
-import api.productinformation.entity.user.UserDto;
+import api.productinformation.dto.RequestDto;
+import api.productinformation.dto.user.NewUser;
 import api.productinformation.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +14,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<Object> saveUser(@RequestBody UserAdd userAdd){
-        return userService.saveUser(userAdd);
+    public ResponseEntity<Object> saveUser(@RequestBody NewUser newUser){
+        return userService.saveUser(newUser);
     }
 
     @DeleteMapping("")

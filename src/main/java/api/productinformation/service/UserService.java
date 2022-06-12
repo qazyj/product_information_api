@@ -2,10 +2,9 @@ package api.productinformation.service;
 
 import api.productinformation.entity.Type;
 import api.productinformation.entity.UserState;
-import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.user.User;
-import api.productinformation.entity.user.UserAdd;
-import api.productinformation.entity.user.UserDto;
+import api.productinformation.entity.User;
+import api.productinformation.dto.user.NewUser;
+import api.productinformation.dto.user.UserDto;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.errorcode.UserErrorCode;
 import api.productinformation.exception.handler.ExitUserException;
@@ -19,9 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,13 +25,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
 
-    public ResponseEntity<Object> saveUser(UserAdd userAdd){
-        checkArgsIsNull(userAdd);
+    public ResponseEntity<Object> saveUser(NewUser newUser){
+        checkArgsIsNull(newUser);
 
-        User savedUser = userRepository.save(User.createUser(userAdd.getUsername(),
-                userAdd.getUserType(), userAdd.getUserState()));
+        User savedUser = userRepository.save(User.createUser(newUser.getUserName(),
+                newUser.getUserType(), newUser.getUserState()));
 
-        return new ResponseEntity<>(new UserDto(savedUser), HttpStatus.OK);
+        return new ResponseEntity<>(UserDto.from(savedUser), HttpStatus.OK);
     }
 
     public ResponseEntity<Object> deleteUser(Long id){
@@ -65,10 +61,10 @@ public class UserService {
             return new ResponseEntity<>(itemRepository.findCanBuyItemList(), HttpStatus.OK);
     }
 
-    private void checkArgsIsNull(UserAdd userAdd) {
-        if(userAdd.getUserState() == null ||
-                userAdd.getUserType() == null ||
-                userAdd.getUsername() == null) {
+    private void checkArgsIsNull(NewUser newUser) {
+        if(newUser.getUserState() == null ||
+                newUser.getUserType() == null ||
+                newUser.getUserName() == null) {
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }

@@ -1,13 +1,12 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.promotion.Promotion;
-import api.productinformation.entity.promotion.PromotionAdd;
-import api.productinformation.entity.promotion.PromotionDto;
+import api.productinformation.entity.Promotion;
+import api.productinformation.dto.promotion.NewPromotion;
+import api.productinformation.dto.promotion.PromotionDto;
 import api.productinformation.repository.PromotionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -29,10 +28,10 @@ class PromotionServiceTest {
     @Test
     public void 프로모션_discountAmount_null_등록() throws Exception {
         //given
-        PromotionAdd promotionAdd = new PromotionAdd("promotion", null, 0.05,
+        NewPromotion newPromotion = new NewPromotion("promotion", null, 0.05,
                 "2022.01.01",
                 "2023.01.01");
-        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(promotionAdd).getBody();
+        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(newPromotion).getBody();
 
         //when
         Promotion findPromotion = promotionRepository.findById(promotionDto.getId()).get();
@@ -48,10 +47,10 @@ class PromotionServiceTest {
     @Test
     public void 프로모션_discountRate_null_등록() throws Exception {
         //given
-        PromotionAdd promotionAdd = new PromotionAdd("promotion", 1000, null,
+        NewPromotion newPromotion = new NewPromotion("promotion", 1000, null,
                 "2022.01.01",
                 "2023.01.01");
-        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(promotionAdd).getBody();
+        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(newPromotion).getBody();
 
         //when
         Promotion findPromotion = promotionRepository.findById(promotionDto.getId()).get();
@@ -68,10 +67,10 @@ class PromotionServiceTest {
     public void 프로모션_등록_후_삭제() throws Exception {
         //given
         //given
-        PromotionAdd promotionAdd = new PromotionAdd("promotion", null, 0.05,
+        NewPromotion newPromotion = new NewPromotion("promotion", null, 0.05,
                 "2022.01.01",
                 "2023.01.01");
-        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(promotionAdd).getBody();
+        PromotionDto promotionDto = (PromotionDto) promotionService.savePromotion(newPromotion).getBody();
 
         promotionRepository.findById(promotionDto.getId()).get();
         promotionService.deletePromotion(promotionDto.getId());
