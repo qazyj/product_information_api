@@ -20,7 +20,6 @@ public class ItemController {
 
     @PostMapping("")
     public ResponseEntity<Object> saveItem(@RequestBody ItemAdd itemAdd){
-        itemAdd.StringToLocalDate();
         return itemService.saveItem(itemAdd);
     }
 

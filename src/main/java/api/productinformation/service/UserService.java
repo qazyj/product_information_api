@@ -9,6 +9,7 @@ import api.productinformation.entity.user.UserDto;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.errorcode.UserErrorCode;
 import api.productinformation.exception.handler.ExitUserException;
+import api.productinformation.exception.handler.InvalidParameterException;
 import api.productinformation.exception.handler.NotFoundResourceException;
 import api.productinformation.repository.ItemRepository;
 import api.productinformation.repository.UserRepository;
@@ -29,6 +30,7 @@ public class UserService {
     private final ItemRepository itemRepository;
 
     public ResponseEntity<Object> saveUser(UserAdd userAdd){
+        checkArgsIsNull(userAdd);
 
         User savedUser = userRepository.save(User.createUser(userAdd.getUsername(),
                 userAdd.getUserType(), userAdd.getUserState()));
@@ -37,6 +39,8 @@ public class UserService {
     }
 
     public ResponseEntity<Object> deleteUser(Long id){
+        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
 
@@ -46,6 +50,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> canBuyItemList(Long id) {
+        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
 
@@ -57,5 +63,13 @@ public class UserService {
             return new ResponseEntity<>(itemRepository.findCanBuyItemListByType(Type.NORMAL), HttpStatus.OK);
         else
             return new ResponseEntity<>(itemRepository.findCanBuyItemList(), HttpStatus.OK);
+    }
+
+    private void checkArgsIsNull(UserAdd userAdd) {
+        if(userAdd.getUserState() == null ||
+                userAdd.getUserType() == null ||
+                userAdd.getUsername() == null) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
     }
 }

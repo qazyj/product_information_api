@@ -3,6 +3,9 @@ package api.productinformation.service;
 import api.productinformation.entity.ItemPromotion;
 import api.productinformation.entity.item.*;
 import api.productinformation.exception.errorcode.CommonErrorCode;
+import api.productinformation.exception.handler.InvalidDateTimeFormatException;
+import api.productinformation.exception.handler.InvalidParameterException;
+import api.productinformation.exception.handler.InvalidStartdateAfterEnddateException;
 import api.productinformation.exception.handler.NotFoundResourceException;
 import api.productinformation.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -21,6 +25,17 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     public ResponseEntity<Object> saveItem(ItemAdd itemAdd){
+        checkArgsIsNull(itemAdd);
+
+        try {
+            itemAdd.StringToLocalDate();
+        }  catch (DateTimeParseException ex) {
+            throw new InvalidDateTimeFormatException(CommonErrorCode.INVALID_DATETIME_FORMAT);
+        }
+
+        if(itemAdd.getStartDateLocalType().isAfter(itemAdd.getEndDateLocalType())){
+            throw new InvalidStartdateAfterEnddateException(CommonErrorCode.INVALID_STARTDATE_AFTER_ENDDATE);
+        }
 
         Item savedItem = itemRepository.save(Item.createItem(itemAdd.getItemName(), itemAdd.getItemType(), itemAdd.getItemPrice(),
                 itemAdd.getStartDateLocalType(), itemAdd.getEndDateLocalType()));
@@ -28,6 +43,8 @@ public class ItemService {
     }
 
     public ResponseEntity<Object> deleteItem(Long id){
+        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+
         Item item = itemRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
 
@@ -37,6 +54,8 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> findItemPromotionById(Long id) {
+        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+
         // 많은 연관관계를 한번에 fetch join 하기 전 item이 있는 지 먼저 확인
         Item item = itemRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -48,6 +67,16 @@ public class ItemService {
         ItemPromotionDto itemPromotionDto = getItemPromotionDto(findItem);
 
         return new ResponseEntity<>(itemPromotionDto, HttpStatus.OK);
+    }
+
+    private void checkArgsIsNull(ItemAdd itemAdd) {
+        if(itemAdd.getItemName() == null ||
+                itemAdd.getItemPrice() == null ||
+                itemAdd.getItemType() == null ||
+                itemAdd.getStartDate() == null ||
+                itemAdd.getEndDate() == null){
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
     }
 
     /**
