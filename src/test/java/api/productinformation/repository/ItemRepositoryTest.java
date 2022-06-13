@@ -123,7 +123,7 @@ class ItemRepositoryTest {
         //given
 
         //when
-        Item byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L).get();
+        Item byIdIncludeMinPromotion = itemRepository.findByIdIncludePromotion(1L).get();
         Collections.sort(byIdIncludeMinPromotion.getItemPromotions(), new Comparator<ItemPromotion>() {
             @Override
             public int compare(ItemPromotion o1, ItemPromotion o2) {

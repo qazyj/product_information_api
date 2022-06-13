@@ -43,7 +43,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     @Override
-    public Optional<Item> findByIdIncludeMinPromotion(Long id) {
+    public Optional<Item> findByIdIncludePromotion(Long id) {
         return Optional.ofNullable(em.createQuery("select distinct i from Item i" +
                         " join fetch i.itemPromotions itempromotions" +
                         " join fetch itempromotions.promotion p" +

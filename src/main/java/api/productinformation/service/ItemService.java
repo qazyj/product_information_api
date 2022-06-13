@@ -68,7 +68,9 @@ public class ItemService {
     }
 
     public ResponseEntity<Object> deleteItem(Long id){
-        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         Item item = itemRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -79,13 +81,18 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> findItemPromotionById(Long id) {
-        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
+        /*
+        //
         // 많은 연관관계를 한번에 fetch join 하기 전 item이 있는 지 먼저 확인
         Item item = itemRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
+        */
 
-        Item findItem = itemRepository.findByIdIncludeMinPromotion(id).orElseThrow(
+        Item findItem = itemRepository.findByIdIncludePromotion(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
 
         sortSalePrice(findItem);
@@ -112,12 +119,15 @@ public class ItemService {
         LocalDate now = LocalDate.now();
 
         for(ItemPromotion itemPromotion : findItem.getItemPromotions()){
-            if(itemPromotion.getSalePrice() <= 0L) continue;
+            if(itemPromotion.getSalePrice() <= 0L)  {
+                continue;
+            }
 
             // 프로모션 기간이 현재와 겹치면 Return
             if(now.compareTo(itemPromotion.getStartDate()) >= 0 &&
-             now.compareTo(itemPromotion.getEndDate()) <= 0)
+             now.compareTo(itemPromotion.getEndDate()) <= 0) {
                 return ItemPromotionDto.from(findItem, itemPromotion.getPromotion());
+            }
 
         }
 

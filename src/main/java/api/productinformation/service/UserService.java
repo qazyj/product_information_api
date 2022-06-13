@@ -35,7 +35,11 @@ public class UserService {
 
     public ResponseEntity<Object> saveUser(NewUser newUser){
         checkArgsIsNull(newUser);
+
+        // UserState - String -> UserState eunm
         newUser.StringToUserState();
+
+        // UserType - String -> UserType eunm
         newUser.StringToUserType();
 
         User savedUser = userRepository.save(User.createUser(newUser.getUserName(),
@@ -45,7 +49,9 @@ public class UserService {
     }
 
     public ResponseEntity<Object> deleteUser(Long id){
-        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -56,7 +62,9 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> canBuyItemList(Long id) {
-        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -76,10 +84,15 @@ public class UserService {
         }
     }
 
+    /**
+     * 입력 받지 못한 컬럼 값이 있는지
+     * @param newUser
+     */
     private void checkArgsIsNull(NewUser newUser) {
         if(Objects.isNull(newUser.getUserState()) ||
                 Objects.isNull(newUser.getUserType()) ||
-                        Objects.isNull(newUser.getUserName())){
+                Objects.isNull(newUser.getUserName())){
+
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }

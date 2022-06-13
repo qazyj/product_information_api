@@ -39,6 +39,8 @@ public class PromotionService {
         }  catch (DateTimeParseException ex) {
             throw new InvalidDateTimeFormatException(CommonErrorCode.INVALID_DATETIME_FORMAT);
         }
+
+        // date : String 타입 -> LocalDate 타입
         newPromotion.StringToLocalDate();
 
         if(newPromotion.getStartDateLocalType().isAfter(newPromotion.getEndDateLocalType())){
@@ -73,7 +75,9 @@ public class PromotionService {
     }
 
     public ResponseEntity<Object> deletePromotion(Long id){
-        if(Objects.isNull(id)) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         Promotion promotion = promotionRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
