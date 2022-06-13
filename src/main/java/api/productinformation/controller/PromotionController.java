@@ -1,9 +1,8 @@
 package api.productinformation.controller;
 
-import api.productinformation.entity.RequestDto;
-import api.productinformation.entity.promotion.PromotionAdd;
-import api.productinformation.entity.promotion.PromotionDto;
+import api.productinformation.dto.RequestDto;
 import api.productinformation.service.PromotionService;
+import api.productinformation.dto.promotion.NewPromotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,8 @@ public class PromotionController {
     private final PromotionService promotionService;
 
     @PostMapping("")
-    public ResponseEntity<Object> savePromotion(@RequestBody PromotionAdd promotionAdd){
-        return promotionService.savePromotion(promotionAdd);
+    public ResponseEntity<Object> savePromotion(@RequestBody NewPromotion newPromotion){
+        return promotionService.savePromotion(newPromotion);
     }
 
     @DeleteMapping("")

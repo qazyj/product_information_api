@@ -1,21 +1,19 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.Type;
-import api.productinformation.entity.item.*;
+import api.productinformation.entity.Item;
+import api.productinformation.entity.UserType;
+import api.productinformation.dto.item.*;
 import api.productinformation.repository.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -30,10 +28,10 @@ class ItemServiceTest {
     @Test
     public void 아이템_등록() throws Exception {
         //given
-        ItemAdd itemAdd = new ItemAdd("bb", "일반", 20000L,
+        NewItem newItem = new NewItem("bb", "일반", 20000L,
                 "2022.01.01",
                 "2023.01.01");
-        ItemDto itemDto = (ItemDto) itemService.saveItem(itemAdd).getBody();
+        ItemDto itemDto = (ItemDto) itemService.saveItem(newItem).getBody();
 
         //when
         Item findItem = itemRepository.findById(itemDto.getId()).get();
@@ -41,10 +39,7 @@ class ItemServiceTest {
         //then
         assertThat(itemDto.getId()).isEqualTo(findItem.getId());
         assertThat(itemDto.getItemName()).isEqualTo(findItem.getItemName());
-        if(findItem.getItemType().equals(Type.NORMAL))
-            assertThat(itemDto.getItemType()).isEqualTo("일반");
-        else
-            assertThat(itemDto.getItemType()).isEqualTo("기업회원상품");
+        assertThat(itemDto.getItemType()).isEqualTo("일반");
         assertThat(itemDto.getItemPrice()).isEqualTo(findItem.getItemPrice());
         assertThat(itemDto.getStartDate()).isEqualTo(findItem.getStartDate());
         assertThat(itemDto.getEndDate()).isEqualTo(findItem.getEndDate());
@@ -53,10 +48,10 @@ class ItemServiceTest {
     @Test
     public void 아이템_등록_후_삭제() throws Exception {
         //given
-        ItemAdd itemAdd = new ItemAdd("bb", "일반", 20000L,
+        NewItem newItem = new NewItem("bb", "일반", 20000L,
                 "2022.1.1",
                 "2023.1.1");
-        ItemDto itemDto = (ItemDto) itemService.saveItem(itemAdd).getBody();
+        ItemDto itemDto = (ItemDto) itemService.saveItem(newItem).getBody();
         itemRepository.findById(itemDto.getId()).get();
         itemService.deleteItem(itemDto.getId());
 

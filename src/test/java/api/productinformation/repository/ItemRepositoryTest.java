@@ -1,20 +1,21 @@
 package api.productinformation.repository;
 
+import api.productinformation.dto.item.ItemDto;
 import api.productinformation.entity.ItemPromotion;
-import api.productinformation.entity.Type;
-import api.productinformation.entity.item.Item;
-import api.productinformation.entity.item.ItemDto;
+import api.productinformation.entity.ItemType;
+import api.productinformation.entity.UserType;
+import api.productinformation.entity.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,7 +33,8 @@ class ItemRepositoryTest {
         // initDB에서 추가한 기본 데이터
 
         //when
-        List<ItemDto> results = itemRepository.findCanBuyItemListByType(Type.NORMAL);
+        List<ItemDto> results = itemRepository.findCanBuyItemListByType(UserType.NORMAL).stream()
+                .map(ItemDto::from).collect(Collectors.toList());
 
         //then
         assertThat(results.size()).isEqualTo(2);
@@ -44,7 +46,8 @@ class ItemRepositoryTest {
         // initDB에서 추가한 기본 데이터
 
         //when
-        List<ItemDto> results = itemRepository.findCanBuyItemList();
+        List<ItemDto> results = itemRepository.findCanBuyItemList().stream()
+                .map(ItemDto::from).collect(Collectors.toList());
 
         //then
         assertThat(results.size()).isEqualTo(3);
@@ -55,14 +58,17 @@ class ItemRepositoryTest {
         //given
         // initDB에서 추가한 기본 데이터
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, "일반", 1000L, "2021.1.1", "2022.12.24");
+            Item item = Item.createItem("item"+i, ItemType.NORMAL, 1000L,
+                    LocalDate.of(2022,1,1),
+                    LocalDate.of(2022,12,24));
             itemRepository.save(item);
         }
         em.flush();
         em.clear();
 
         //when
-        List<ItemDto> results = itemRepository.findCanBuyItemList();
+        List<ItemDto> results = itemRepository.findCanBuyItemList().stream()
+                .map(ItemDto::from).collect(Collectors.toList());
 
         //then
         assertThat(results.size()).isEqualTo(103);
@@ -73,15 +79,19 @@ class ItemRepositoryTest {
         //given
         // initDB에서 추가한 기본 데이터
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, "기업회원상품", 1000L, "2021.1.1", "2022.12.24");
+            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L,
+                    LocalDate.of(2022,1,1),
+                    LocalDate.of(2022,12,24));
             itemRepository.save(item);
         }
         em.flush();
         em.clear();
 
         //when
-        List<ItemDto> normalResults = itemRepository.findCanBuyItemListByType(Type.NORMAL);
-        List<ItemDto> corporateResults = itemRepository.findCanBuyItemList();
+        List<ItemDto> normalResults = itemRepository.findCanBuyItemListByType(UserType.NORMAL).stream()
+                .map(ItemDto::from).collect(Collectors.toList());
+        List<ItemDto> corporateResults = itemRepository.findCanBuyItemList().stream()
+                .map(ItemDto::from).collect(Collectors.toList());
 
         //then
         assertThat(normalResults.size()).isEqualTo(2);
@@ -92,14 +102,17 @@ class ItemRepositoryTest {
     public void 살_수_없는_날짜_아이템_추가_후_테스트() throws Exception {
         //given
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, "기업회원상품", 1000L, "2021.1.1", "2022.1.1");
+            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L,
+                    LocalDate.of(2022,1,1),
+                    LocalDate.of(2022,1,1));
             itemRepository.save(item);
         }
         em.flush();
         em.clear();
 
         //when
-        List<ItemDto> results = itemRepository.findCanBuyItemListByType(Type.NORMAL);
+        List<ItemDto> results = itemRepository.findCanBuyItemListByType(UserType.NORMAL).stream()
+                .map(ItemDto::from).collect(Collectors.toList());
 
         //then
         assertThat(results.size()).isEqualTo(2);
@@ -110,7 +123,7 @@ class ItemRepositoryTest {
         //given
 
         //when
-        Item byIdIncludeMinPromotion = itemRepository.findByIdIncludeMinPromotion(1L).get();
+        Item byIdIncludeMinPromotion = itemRepository.findByIdIncludePromotion(1L).get();
         Collections.sort(byIdIncludeMinPromotion.getItemPromotions(), new Comparator<ItemPromotion>() {
             @Override
             public int compare(ItemPromotion o1, ItemPromotion o2) {

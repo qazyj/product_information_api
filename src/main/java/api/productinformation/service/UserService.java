@@ -1,11 +1,12 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.Type;
+import api.productinformation.dto.item.ItemDto;
+import api.productinformation.dto.user.NewUser;
+import api.productinformation.dto.user.UserDto;
+import api.productinformation.entity.Item;
+import api.productinformation.entity.UserType;
 import api.productinformation.entity.UserState;
-import api.productinformation.entity.item.ItemDto;
-import api.productinformation.entity.user.User;
-import api.productinformation.entity.user.UserAdd;
-import api.productinformation.entity.user.UserDto;
+import api.productinformation.entity.User;
 import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.errorcode.UserErrorCode;
 import api.productinformation.exception.handler.ExitUserException;
@@ -20,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -29,17 +33,25 @@ public class UserService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
 
-    public ResponseEntity<Object> saveUser(UserAdd userAdd){
-        checkArgsIsNull(userAdd);
+    public ResponseEntity<Object> saveUser(NewUser newUser){
+        checkArgsIsNull(newUser);
 
-        User savedUser = userRepository.save(User.createUser(userAdd.getUsername(),
-                userAdd.getUserType(), userAdd.getUserState()));
+        // UserState - String -> UserState eunm
+        newUser.StringToUserState();
 
-        return new ResponseEntity<>(new UserDto(savedUser), HttpStatus.OK);
+        // UserType - String -> UserType eunm
+        newUser.StringToUserType();
+
+        User savedUser = userRepository.save(User.createUser(newUser.getUserName(),
+                newUser.getRealUserType(), newUser.getRealUserState()));
+
+        return new ResponseEntity<>(UserDto.from(savedUser), HttpStatus.OK);
     }
 
     public ResponseEntity<Object> deleteUser(Long id){
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
@@ -50,25 +62,37 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> canBuyItemList(Long id) {
-        if(id==null) throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        if(Objects.isNull(id)) {
+            throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         User user = userRepository.findById(id).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
 
-        if (user.getUserState() == UserState.UNUSE) {
-            throw new ExitUserException(UserErrorCode.EXIT_USER);
-        }
+        // 탈퇴 예외처리
+        user.withdraw();
 
-        if(user.getUserType().equals(Type.NORMAL))
-            return new ResponseEntity<>(itemRepository.findCanBuyItemListByType(Type.NORMAL), HttpStatus.OK);
-        else
-            return new ResponseEntity<>(itemRepository.findCanBuyItemList(), HttpStatus.OK);
+        if(user.getUserType().equals(UserType.NORMAL)) {
+            List<ItemDto> result = itemRepository.findCanBuyItemListByType(UserType.NORMAL).stream()
+                    .map(ItemDto::from).collect(Collectors.toList());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            List<ItemDto> result = itemRepository.findCanBuyItemList().stream()
+                    .map(ItemDto::from).collect(Collectors.toList());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
     }
 
-    private void checkArgsIsNull(UserAdd userAdd) {
-        if(userAdd.getUserState() == null ||
-                userAdd.getUserType() == null ||
-                userAdd.getUsername() == null) {
+    /**
+     * 입력 받지 못한 컬럼 값이 있는지
+     * @param newUser
+     */
+    private void checkArgsIsNull(NewUser newUser) {
+        if(Objects.isNull(newUser.getUserState()) ||
+                Objects.isNull(newUser.getUserType()) ||
+                Objects.isNull(newUser.getUserName())){
+
             throw new InvalidParameterException(CommonErrorCode.INVALID_PARAMETER);
         }
     }
