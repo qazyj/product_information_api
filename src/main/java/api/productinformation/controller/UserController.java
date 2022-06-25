@@ -24,8 +24,8 @@ public class UserController {
         return userService.deleteUser(requestDto.getId());
     }
 
-    @GetMapping("/itemlist")
-    public ResponseEntity<Object> canBuyItemList(@RequestBody RequestDto requestDto){
-        return userService.canBuyItemList(requestDto.getId());
+    @GetMapping("/itemlist/{id}")
+    public ResponseEntity<Object> canBuyItemList(@RequestParam("id") Long id){
+        return userService.canBuyItemList(id);
     }
 }
