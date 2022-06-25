@@ -1,13 +1,8 @@
 package api.productinformation.dto.user;
 
-import api.productinformation.entity.ItemType;
-import api.productinformation.entity.UserType;
+import api.productinformation.entity.Address;
 import api.productinformation.entity.User;
-import api.productinformation.entity.UserState;
 import lombok.*;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Getter
 @NoArgsConstructor
@@ -18,6 +13,7 @@ public class UserDto {
     private String userName;
     private String userType;
     private String userState;
+    private Address userAddress;
 
     public static UserDto from(User user) {
         return UserDto.builder()
@@ -25,6 +21,7 @@ public class UserDto {
                 .userName(user.getUserName())
                 .userType(user.getUserType().getValue())
                 .userState(user.getUserState().getValue())
+                .userAddress(user.getAddress())
                 .build();
     }
 }

@@ -1,8 +1,6 @@
-package api.productinformation.entity;
+package api.productinformation.entity.enumType;
 
-import api.productinformation.exception.errorcode.ItemErrorCode;
 import api.productinformation.exception.errorcode.UserErrorCode;
-import api.productinformation.exception.handler.InvalidItemTypeException;
 import api.productinformation.exception.handler.InvalidUserTypeException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

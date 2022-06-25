@@ -33,6 +33,7 @@ public class SwaggerConfig {
                         "\"itemName\" : \"test\"," +
                         "\"itemPrice\" : 10000," +
                         "\"itemType\" : \"일반\"," +
+                        "\"stockQuantity\" : 10," +
                         "\"startDate\" : \"2022.2.2\"," +
                         "\"endDate\" : \"2022.4.5\"" +
                         "}\n\n" +
@@ -47,7 +48,11 @@ public class SwaggerConfig {
                         "{" +
                         "\"userName\" : \"김영진\"," +
                         "\"userType\" : \"일반\"," +
-                        "\"userState\" : \"정상\"" +
+                        "\"userState\" : \"정상\"," +
+                        "\"address\" : {" +
+                        "\"city\" : \"인천\"," +
+                        "\"street\" : \"남동구 논고개로\"," +
+                        "\"zipcode\" : \"21667\"}" +
                         "}\n\n" +
                         "DELETE example\n\nItem      " +
                         "{" +

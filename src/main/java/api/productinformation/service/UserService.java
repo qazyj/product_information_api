@@ -3,13 +3,9 @@ package api.productinformation.service;
 import api.productinformation.dto.item.ItemDto;
 import api.productinformation.dto.user.NewUser;
 import api.productinformation.dto.user.UserDto;
-import api.productinformation.entity.Item;
-import api.productinformation.entity.UserType;
-import api.productinformation.entity.UserState;
+import api.productinformation.entity.enumType.UserType;
 import api.productinformation.entity.User;
 import api.productinformation.exception.errorcode.CommonErrorCode;
-import api.productinformation.exception.errorcode.UserErrorCode;
-import api.productinformation.exception.handler.ExitUserException;
 import api.productinformation.exception.handler.InvalidParameterException;
 import api.productinformation.exception.handler.NotFoundResourceException;
 import api.productinformation.repository.ItemRepository;
@@ -20,12 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -44,7 +37,7 @@ public class UserService {
         newUser.StringToUserType();
 
         User savedUser = userRepository.save(User.createUser(newUser.getUserName(),
-                newUser.getRealUserType(), newUser.getRealUserState()));
+                newUser.getRealUserType(), newUser.getRealUserState(), newUser.getAddress()));
 
         return new ResponseEntity<>(UserDto.from(savedUser), HttpStatus.OK);
     }

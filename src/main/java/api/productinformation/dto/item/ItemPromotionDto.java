@@ -1,8 +1,6 @@
 package api.productinformation.dto.item;
 
 import api.productinformation.entity.Item;
-import api.productinformation.entity.ItemType;
-import api.productinformation.entity.UserType;
 import api.productinformation.entity.Promotion;
 import api.productinformation.dto.promotion.*;
 import lombok.*;
@@ -19,6 +17,7 @@ public class ItemPromotionDto {
     private String itemType;
     private Long itemPrice;
     private Long salePrice;
+    private int stockQuantity;
     private LocalDate itemStartDate;
     private LocalDate itemEndDate;
     private PromotionDto promotionDto;
@@ -29,6 +28,7 @@ public class ItemPromotionDto {
                 .itemName(item.getItemName())
                 .itemType(item.getItemType().getValue())
                 .itemPrice(item.getItemPrice())
+                .stockQuantity(item.getStockQuantity())
                 .itemStartDate(item.getStartDate())
                 .itemEndDate(item.getEndDate())
                 .promotionDto(PromotionDto.from(promotion))
