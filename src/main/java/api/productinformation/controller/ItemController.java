@@ -23,8 +23,8 @@ public class ItemController {
         return itemService.deleteItem(requestDto.getId());
     }
 
-    @GetMapping("/promotion")
-    public ResponseEntity<Object> findItemPromotionById(@RequestBody RequestDto requestDto) {
-        return itemService.findItemPromotionById(requestDto.getId());
+    @GetMapping("/promotion/{id}")
+    public ResponseEntity<Object> findItemPromotionById(@RequestParam("id") Long id) {
+        return itemService.findItemPromotionById(id);
     }
 }

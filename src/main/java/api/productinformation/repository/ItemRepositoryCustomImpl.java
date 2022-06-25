@@ -17,7 +17,6 @@ import java.util.Optional;
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     private final EntityManager em;
 
-
     @Override
     public List<Item> findCanBuyItemList() {
         LocalDate now = LocalDate.now();
