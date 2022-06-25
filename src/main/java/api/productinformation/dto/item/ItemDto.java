@@ -1,12 +1,8 @@
 package api.productinformation.dto.item;
 
 import api.productinformation.entity.Item;
-import api.productinformation.entity.ItemType;
-import api.productinformation.entity.UserType;
 import lombok.*;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Getter
@@ -18,6 +14,7 @@ public class ItemDto {
     private String itemName;
     private String itemType;
     private Long itemPrice;
+    private int stockQuantity;
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -27,6 +24,7 @@ public class ItemDto {
                 .itemName(item.getItemName())
                 .itemType(item.getItemType().getValue())
                 .itemPrice(item.getItemPrice())
+                .stockQuantity(item.getStockQuantity())
                 .startDate(item.getStartDate())
                 .endDate(item.getEndDate())
                 .build();

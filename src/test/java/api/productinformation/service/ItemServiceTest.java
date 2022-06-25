@@ -1,7 +1,6 @@
 package api.productinformation.service;
 
 import api.productinformation.entity.Item;
-import api.productinformation.entity.UserType;
 import api.productinformation.dto.item.*;
 import api.productinformation.repository.ItemRepository;
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ class ItemServiceTest {
     @Test
     public void 아이템_등록() throws Exception {
         //given
-        NewItem newItem = new NewItem("bb", "일반", 20000L,
+        NewItem newItem = new NewItem("bb", "일반", 20000L, 10,
                 "2022.01.01",
                 "2023.01.01");
         ItemDto itemDto = (ItemDto) itemService.saveItem(newItem).getBody();
@@ -48,7 +47,7 @@ class ItemServiceTest {
     @Test
     public void 아이템_등록_후_삭제() throws Exception {
         //given
-        NewItem newItem = new NewItem("bb", "일반", 20000L,
+        NewItem newItem = new NewItem("bb", "일반", 20000L, 10,
                 "2022.1.1",
                 "2023.1.1");
         ItemDto itemDto = (ItemDto) itemService.saveItem(newItem).getBody();

@@ -1,5 +1,6 @@
 package api.productinformation.entity;
 
+import api.productinformation.entity.enumType.ItemType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +46,7 @@ class PromotionTest {
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
                         "2022.1.1", "2022.1.1");
-        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L, 10,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2022,1,1));
         em.persist(promotion);
@@ -82,7 +83,7 @@ class PromotionTest {
         Promotion promotion =
                 Promotion.createPromotion("promotion", null, 0.05,
                         "2022.1.1", "2022.1.1");
-        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L, 10,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2022,1,1));
         em.persist(promotion);
@@ -110,7 +111,7 @@ class PromotionTest {
         Promotion promotion =
                 Promotion.createPromotion("promotion", 2000, null,
                         "2022.1.1", "2022.1.1");
-        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L,
+        Item item = Item.createItem("bb", ItemType.NORMAL, 20000L, 10,
                 LocalDate.of(2022,1,1),
                 LocalDate.of(2022,1,1));
         em.persist(promotion);

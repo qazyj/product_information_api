@@ -1,7 +1,7 @@
 package api.productinformation.service;
 
-import api.productinformation.entity.UserType;
-import api.productinformation.entity.UserState;
+import api.productinformation.entity.enumType.UserType;
+import api.productinformation.entity.enumType.UserState;
 import api.productinformation.entity.User;
 import api.productinformation.dto.user.*;
 import api.productinformation.repository.UserRepository;
@@ -25,7 +25,7 @@ class UserServiceTest {
     @Test
     public void 유저_등록() throws Exception {
         //given
-        NewUser newUser = new NewUser("kyj", "일반", "탈퇴");
+        NewUser newUser = new NewUser("kyj", "일반", "탈퇴", "인천", "남동구", "논현동");
         UserDto userDto = (UserDto) userService.saveUser(newUser).getBody();
 
         //when
@@ -48,7 +48,7 @@ class UserServiceTest {
     public void 유저_등록_후_삭제() throws Exception {
         //given
         // InitDB 클래스에서 저장한 userItem
-        NewUser newUser = new NewUser("kyj", "일반", "탈퇴");
+        NewUser newUser = new NewUser("kyj", "일반", "탈퇴", "인천", "남동구", "논현동");
         UserDto userDto = (UserDto) userService.saveUser(newUser).getBody();
         userService.deleteUser(userDto.getUserId());
 

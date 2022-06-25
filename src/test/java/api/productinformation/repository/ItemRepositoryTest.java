@@ -2,8 +2,8 @@ package api.productinformation.repository;
 
 import api.productinformation.dto.item.ItemDto;
 import api.productinformation.entity.ItemPromotion;
-import api.productinformation.entity.ItemType;
-import api.productinformation.entity.UserType;
+import api.productinformation.entity.enumType.ItemType;
+import api.productinformation.entity.enumType.UserType;
 import api.productinformation.entity.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ class ItemRepositoryTest {
         //given
         // initDB에서 추가한 기본 데이터
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, ItemType.NORMAL, 1000L,
+            Item item = Item.createItem("item"+i, ItemType.NORMAL, 1000L, 10,
                     LocalDate.of(2022,1,1),
                     LocalDate.of(2022,12,24));
             itemRepository.save(item);
@@ -79,7 +79,7 @@ class ItemRepositoryTest {
         //given
         // initDB에서 추가한 기본 데이터
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L,
+            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L, 10,
                     LocalDate.of(2022,1,1),
                     LocalDate.of(2022,12,24));
             itemRepository.save(item);
@@ -102,7 +102,7 @@ class ItemRepositoryTest {
     public void 살_수_없는_날짜_아이템_추가_후_테스트() throws Exception {
         //given
         for(int i = 0; i < 100; i++){
-            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L,
+            Item item = Item.createItem("item"+i, ItemType.CORPORATE, 1000L, 10,
                     LocalDate.of(2022,1,1),
                     LocalDate.of(2022,1,1));
             itemRepository.save(item);

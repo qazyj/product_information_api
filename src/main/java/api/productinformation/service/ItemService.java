@@ -53,7 +53,7 @@ public class ItemService {
         }
 
         Item savedItem = itemRepository.save(Item.createItem(newItem.getItemName(), newItem.getRealItemType(), newItem.getItemPrice(),
-                newItem.getStartDateLocalType(), newItem.getEndDateLocalType()));
+                newItem.getStockQuantity(), newItem.getStartDateLocalType(), newItem.getEndDateLocalType()));
 
         List<Promotion> itemConnectablePromotion =
                 promotionRepository.findItemConnectablePromotion(savedItem.getStartDate(), savedItem.getEndDate());
