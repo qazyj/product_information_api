@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 public class OrderItem {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long id;
 
@@ -25,6 +25,7 @@ public class OrderItem {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
     private Long orderPrice; //주문 가격
@@ -32,6 +33,12 @@ public class OrderItem {
 
     public void setOrder(Order order){
         this.order = order;
+    }
+
+    //==연관관계 메서드==//
+    public void setItem(Item item) {
+        this.item = item;
+        item.getOrderItems().add(this);
     }
 
     //==생성 메서드==//

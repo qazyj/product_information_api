@@ -3,6 +3,7 @@ package api.productinformation.entity;
 import api.productinformation.entity.enumType.ItemType;
 import api.productinformation.exception.errorcode.ItemErrorCode;
 import api.productinformation.exception.handler.InvalidItemStockquantityException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,8 @@ public class Item extends DateEntity {
     @Column(name = "item_id")
     private Long id;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ItemPromotion> itemPromotions = new ArrayList<>();
 
     private String itemName;
@@ -33,9 +35,9 @@ public class Item extends DateEntity {
 
     private Long itemPrice;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     private int stockQuantity;
 

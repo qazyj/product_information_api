@@ -21,7 +21,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
     private String userName;
@@ -54,6 +54,7 @@ public class User {
             throw new ExitUserException(UserErrorCode.EXIT_USER);
         }
 
-        this.userState = UserState.UNUSE;
+        // 테스트 용
+        //this.userState = UserState.UNUSE;
     }
 }
