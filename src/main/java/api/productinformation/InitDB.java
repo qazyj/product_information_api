@@ -12,6 +12,8 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 샘플 데이터 추가
@@ -94,6 +96,29 @@ public class InitDB {
             em.persist(itemPromotion7);
             em.persist(itemPromotion8);
             em.persist(itemPromotion9);
+
+
+            OrderItem orderItem = OrderItem.createOrderItem(item1, 19000L, 2);
+            OrderItem orderItem2 = OrderItem.createOrderItem(item1, 19000L, 2);
+            OrderItem orderItem3 = OrderItem.createOrderItem(item1, 19000L, 2);
+            OrderItem orderItem4 = OrderItem.createOrderItem(item1, 19000L, 2);
+            OrderItem orderItem5 = OrderItem.createOrderItem(item2, 18000L, 2);
+            em.persist(orderItem);
+            em.persist(orderItem2);
+            em.persist(orderItem3);
+            em.persist(orderItem4);
+            em.persist(orderItem5);
+
+            Order savedOrder = Order.createOrder(user2, orderItem);
+            Order savedOrder2 = Order.createOrder(user3, orderItem2);
+            Order savedOrder3 = Order.createOrder(user3, orderItem3);
+            Order savedOrder4 = Order.createOrder(user3, orderItem4);
+            Order savedOrder5 = Order.createOrder(user2, orderItem5);
+            em.persist(savedOrder);
+            em.persist(savedOrder2);
+            em.persist(savedOrder3);
+            em.persist(savedOrder4);
+            em.persist(savedOrder5);
         }
     }
 }

@@ -114,4 +114,18 @@ public class OrderServiceTest {
         assertThat(getOrder.getOrderState()).isEqualTo(OrderState.CANCEL);
         assertThat(getOrder.getOrderItems().get(0).getItem().getStockQuantity()).isEqualTo(10);
     }
+
+    @Test
+    public void 할인적용확인() throws Exception {
+        //given
+        // 기본 data
+
+        //when
+        OrderDto order = (OrderDto) orderService.order(2L, 1L, 2).getBody();
+        Order getOrder = orderRepository.findById(order.getId()).get();
+
+        //then
+        assertThat(getOrder.getOrderItems().get(0).getOrderPrice()).isEqualTo(19000);
+
+    }
 }

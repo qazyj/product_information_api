@@ -1,5 +1,6 @@
 package api.productinformation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,12 @@ public class ItemPromotion extends DateEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
+    @JsonIgnore
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion_id")
+    @JsonIgnore
     private Promotion promotion;
 
     private Long salePrice;

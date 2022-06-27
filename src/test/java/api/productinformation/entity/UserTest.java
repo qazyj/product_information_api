@@ -42,8 +42,8 @@ class UserTest {
         User findUser = em.find(User.class, user.getId());
 
         //then
-        assertThat(user.getUserState()).isEqualTo(UserState.UNUSE);
-        assertThat(findUser.getUserState()).isEqualTo(UserState.UNUSE);
+        assertThat(user.getUserState()).isEqualTo(UserState.USE);
+        assertThat(findUser.getUserState()).isEqualTo(UserState.USE);
 
     }
 }

@@ -28,7 +28,7 @@ public class OrderDto {
     private String street;
     private String zipcode;
     private LocalDateTime orderDate;
-
+    private List<OrderItemDto> orderItemDtoList = new ArrayList<>();
 
     public static OrderDto from (Order order) {
         return OrderDto.builder()

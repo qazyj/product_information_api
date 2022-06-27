@@ -4,6 +4,7 @@ import api.productinformation.entity.enumType.DeliveryState;
 import api.productinformation.entity.enumType.OrderState;
 import api.productinformation.exception.errorcode.OrderErrorCode;
 import api.productinformation.exception.handler.InvalidCancelException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,21 +22,26 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
 
     @Enumerated(EnumType.STRING)
     private DeliveryState deliveryState;

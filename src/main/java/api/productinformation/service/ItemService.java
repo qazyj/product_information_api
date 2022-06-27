@@ -115,7 +115,7 @@ public class ItemService {
      * @return 정렬된 가격 순으로 아이템 날짜와 프로모션 날짜가 겹치면 dto 변환 후
      * 단, 없을 경우 null 리턴
      */
-    private ItemPromotionDto getItemPromotionDto(Item findItem) {
+    public ItemPromotionDto getItemPromotionDto(Item findItem) {
         LocalDate now = LocalDate.now();
 
         for(ItemPromotion itemPromotion : findItem.getItemPromotions()){
@@ -135,7 +135,7 @@ public class ItemService {
         return ItemPromotionDto.from(findItem, null);
     }
 
-    private void sortSalePrice(Item findItem) {
+    public void sortSalePrice(Item findItem) {
         Collections.sort(findItem.getItemPromotions(), new Comparator<ItemPromotion>() {
             @Override
             public int compare(ItemPromotion o1, ItemPromotion o2) {
