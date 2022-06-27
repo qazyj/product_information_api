@@ -1,6 +1,6 @@
 package api.productinformation.dto.item;
 
-import api.productinformation.entity.ItemType;
+import api.productinformation.entity.enumType.ItemType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,6 +16,7 @@ public class NewItem {
     private String itemName;
     private String itemType;
     private Long itemPrice;
+    private int stockQuantity;
     private String startDate;
     private String endDate;
 
@@ -26,10 +27,11 @@ public class NewItem {
     @DateTimeFormat(pattern = "yyyy.M.d")
     private LocalDate endDateLocalType;
 
-    public NewItem(String itemName, String itemType, Long itemPrice, String startDate, String endDate) {
+    public NewItem(String itemName, String itemType, Long itemPrice, int stockQuantity, String startDate, String endDate) {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemPrice = itemPrice;
+        this.stockQuantity = stockQuantity;
         this.startDate = startDate;
         this.endDate = endDate;
     }

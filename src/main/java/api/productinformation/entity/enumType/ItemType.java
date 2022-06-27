@@ -1,10 +1,7 @@
-package api.productinformation.entity;
+package api.productinformation.entity.enumType;
 
-import api.productinformation.exception.errorcode.CommonErrorCode;
 import api.productinformation.exception.errorcode.ItemErrorCode;
-import api.productinformation.exception.handler.InvalidDateTimeFormatException;
 import api.productinformation.exception.handler.InvalidItemTypeException;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

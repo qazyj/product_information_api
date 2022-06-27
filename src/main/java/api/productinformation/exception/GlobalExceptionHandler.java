@@ -13,6 +13,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(InvalidCancelException.class)
+    public ResponseEntity<Object> handleInvalidCancelException(InvalidCancelException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        log.error("InvalidCancelException", e);
+        return handleExceptionInternal(errorCode);
+    }
+
+    @ExceptionHandler(InvalidItemStockquantityException.class)
+    public ResponseEntity<Object> handleInvalidItemStockquantityException(InvalidItemStockquantityException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        log.error("InvalidItemStockquantityException", e);
+        return handleExceptionInternal(errorCode);
+    }
+
     @ExceptionHandler(InvalidItemTypeException.class)
     public ResponseEntity<Object> handleInvalidItemTypeException(InvalidItemTypeException e) {
         ErrorCode errorCode = e.getErrorCode();

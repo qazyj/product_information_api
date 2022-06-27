@@ -1,8 +1,7 @@
 package api.productinformation.repository;
 
-import api.productinformation.entity.UserType;
+import api.productinformation.entity.enumType.UserType;
 import api.productinformation.entity.Item;
-import api.productinformation.dto.item.*;
 
 import java.time.LocalDate;
 import java.util.List;

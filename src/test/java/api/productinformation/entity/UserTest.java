@@ -1,5 +1,7 @@
 package api.productinformation.entity;
 
+import api.productinformation.entity.enumType.UserState;
+import api.productinformation.entity.enumType.UserType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +21,7 @@ class UserTest {
         //given
 
         //when
-        User user = User.createUser("aa", UserType.NORMAL, UserState.USE);
+        User user = User.createUser("aa", UserType.NORMAL, UserState.USE, new Address("인천", "남동구", "논현동"));
 
         //then
         assertThat(user.getUserType()).isEqualTo(UserType.NORMAL);
@@ -30,7 +32,7 @@ class UserTest {
     @Test
     public void 유저_탈퇴() throws Exception {
         //given
-        User user = User.createUser("aa", UserType.NORMAL, UserState.USE);
+        User user = User.createUser("aa", UserType.NORMAL, UserState.USE, new Address("인천", "남동구", "논현동"));
         em.persist(user);
         user.withdraw();
         em.flush();
@@ -40,8 +42,8 @@ class UserTest {
         User findUser = em.find(User.class, user.getId());
 
         //then
-        assertThat(user.getUserState()).isEqualTo(UserState.UNUSE);
-        assertThat(findUser.getUserState()).isEqualTo(UserState.UNUSE);
+        assertThat(user.getUserState()).isEqualTo(UserState.USE);
+        assertThat(findUser.getUserState()).isEqualTo(UserState.USE);
 
     }
 }

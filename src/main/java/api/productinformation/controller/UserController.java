@@ -25,7 +25,13 @@ public class UserController {
     }
 
     @GetMapping("/itemlist/{id}")
-    public ResponseEntity<Object> canBuyItemList(@RequestParam("id") Long id){
-        return userService.canBuyItemList(id);
+    public ResponseEntity<Object> findItemlistById(@RequestParam("id") Long id){
+
+        return userService.findItemlistById(id);
+    }
+
+    @GetMapping("/orderlist/{id}")
+    public ResponseEntity<Object> findOrderlistById(@RequestParam("id") Long id){
+        return userService.findOrderlistById(id);
     }
 }
