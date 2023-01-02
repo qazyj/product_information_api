@@ -23,6 +23,8 @@ import java.util.List;
 public class InitDB {
     private final InitDBService initDBService;
 
+
+
     @PostConstruct
     public void init() {
         initDBService.init();
@@ -35,7 +37,6 @@ public class InitDB {
 
         @Transactional
         public void init() {
-
 
             User user1 = User.createUser("이수경", UserType.NORMAL, UserState.UNUSE, new Address("인천", "남동구 논고개로", "21667"));
             User user2 = User.createUser("최상면", UserType.CORPORATE, UserState.USE, new Address("인천", "남동구 논고개로", "21667"));

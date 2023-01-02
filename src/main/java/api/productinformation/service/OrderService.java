@@ -38,7 +38,7 @@ public class OrderService {
     @Transactional
     public ResponseEntity<Object> order(Long userId, Long itemId, int count) {
 
-        //엔티티 조회
+        //엔티티 조회z
         User user = userRepository.findById(userId).get();
         Item item = itemRepository.findByIdIncludePromotion(itemId).orElseThrow(
                 () -> new NotFoundResourceException(CommonErrorCode.NOT_FOUND_RESOURCE));
